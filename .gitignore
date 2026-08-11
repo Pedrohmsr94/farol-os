@@ -1,0 +1,35 @@
+# Sistema operacional
+.DS_Store
+Thumbs.db
+
+# Editores
+.idea/
+.vscode/
+
+# Claude Code — sessões locais, não vão pro repo
+.claude/projects/
+.claude/sessions/
+.claude/shell-snapshots/
+.claude/telemetry/
+.claude/file-history/
+.claude/backups/
+.claude/settings.local.json
+
+# Dependências
+node_modules/
+
+# Temporários
+*.log
+*.tmp
+
+# Drop zone — os arquivos que você joga aqui não sobem, só o README
+dados/*
+!dados/README.md
+
+# Obsidian — layout local da janela
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+.obsidian/cache
+
+# Privado do cliente — nunca sobe pro GitHub
+notas/privado/
