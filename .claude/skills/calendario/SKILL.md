@@ -30,6 +30,10 @@ Saída: uma seção nova no topo de `conteudo/calendario.md`.
 
 **E o estoque de pesquisa, que é de onde a pauta deve sair:**
 
+- `conteudo/linhas-editoriais.md` — **as linhas e a fatia de cada uma no mês.**
+  É ele que define a mistura. Se estiver em branco, rodar `/ideias` antes
+- `pesquisa/ideias/` — o banco perene, agrupado por linha. Na maioria dos clientes
+  é daqui que sai o grosso do mês
 - `pesquisa/radar/resumo-semanal-*.md` — as pautas mais fortes de cada semana
 - `pesquisa/radar/` — os briefings do mês, incluindo os "Sinais fracos" que
   cresceram e as perguntas capturadas do público
@@ -72,16 +76,19 @@ Repetir o que funcionou é o trabalho — não é falta de criatividade.
 **Quantidade:** a do contrato. Nem mais nem menos. Propor 12 posts num contrato
 de 8 gera atraso e fila entupida.
 
-**Mistura.** Toda pauta precisa das quatro:
+**Mistura.** A proporção vem de `conteudo/linhas-editoriais.md` — normalmente
+Autoridade 30% · Utilidade 30% · Confiança 25% · Oferta 15%, mas quem manda é o
+arquivo do cliente.
 
-| Tipo | Pra quê | Quanto |
-|---|---|---|
-| Resolve dúvida | tira a objeção que trava a venda | o grosso |
-| Prova | caso, número, depoimento, bastidor | recorrente |
-| Oferta | diz o que vende e como comprar | mínimo 1 |
-| Teste | ângulo ou formato novo, pra medir | 1 a 2 |
+Mês todo em Autoridade constrói reputação e não vende. Mês todo em Oferta cansa e
+some do alcance.
 
-Pauta só de dúvida não vende. Pauta só de oferta cansa e some do alcance.
+Fora da proporção, reservar **1 a 2 testes**: ângulo ou formato novo, pra ter o
+que medir no mês seguinte.
+
+Se uma linha não tiver ideia suficiente no banco pra preencher a fatia dela,
+dizer isso em vez de forçar tema fraco — e apontar qual fonte do `/ideias` está
+seca.
 
 **Datas.** Cruzar com o que tem prazo na estratégia — sazonalidade do setor,
 fechamento, feriado que muda o horário, evento da cidade.
@@ -111,9 +118,9 @@ Seção nova no topo de `conteudo/calendario.md`:
 
 **Objetivo do mês:** <como esse mês empurra o objetivo do trimestre>
 
-| Data | Tema | Formato | Canal | Status | Origem | Arquivo |
-|---|---|---|---|---|---|---|
-| 03/09 | Quanto custa atrasar a entrega do IR | carrossel | Instagram | pauta | radar 28/08 | — |
+| Data | Tema | Linha | Formato | Canal | Status | Origem | Arquivo |
+|---|---|---|---|---|---|---|---|
+| 03/09 | Quanto custa atrasar a entrega do IR | Utilidade | carrossel | Instagram | pauta | ideias 30/08 | — |
 ```
 
 Nome do arquivo já definido aqui (`AAAA-MM-DD-tema-curto`), mesmo antes de
@@ -129,8 +136,9 @@ no fim do mês, responder se o conteúdo veio de pesquisa ou de improviso.
 Mostrar a tabela e:
 
 ```
-<n> pautas pra <mês>. <n> resolvem dúvida · <n> prova · <n> oferta · <n> teste
-Origem: <n> do radar · <n> de ângulos guardados · <n> de SEO
+<n> pautas pra <mês>.
+Linhas: Autoridade <n> · Utilidade <n> · Confiança <n> · Oferta <n> · teste <n>
+Origem: <n> do banco de ideias · <n> do radar · <n> de ângulos guardados · <n> de SEO
 
 Preciso de você: <lista do que depende do cliente — foto, dado, autorização>
 

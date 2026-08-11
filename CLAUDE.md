@@ -114,10 +114,12 @@ nome do arquivo. Quando a frase pedir outro texto, alias:
 - `diagnostico/` — o retrato de onde o marketing estava quando começou
 - `pesquisa/` — a camada que faz o conteúdo não ser opinião solta
   - `pesquisa/fontes.md` — o mapa de fontes do nicho desse cliente
-  - `pesquisa/radar/` — briefings de pauta
+  - `pesquisa/radar/` — briefings de pauta, do que mudou lá fora
+  - `pesquisa/ideias/` — o banco perene, do que já existe no negócio
   - `pesquisa/angulos/` — os ângulos de cada tema
   - `pesquisa/investigacoes/` — voz real do dono, análise de nicho, comentários
   - `pesquisa/seo/` — os 7 passos de SEO e GEO
+- `conteudo/linhas-editoriais.md` — o que cada grupo de conteúdo tem que conquistar
 - `conteudo/calendario.md` — a pauta do mês
 - `conteudo/fila/` — o que está escrito esperando aprovação
 - `conteudo/publicados/` — o que foi ao ar, com data e resultado
@@ -136,8 +138,9 @@ Nenhuma peça pula uma etapa. É isso que separa conteúdo que constrói autorid
 conteúdo que só ocupa o feed.
 
 ```
-/radar          pesquisa → pautas fichadas, com fato e fonte
-   ↓
+/radar          o que mudou lá fora → pautas com fato e fonte    ⟍
+/ideias         o que já existe no negócio → banco perene         ⟩ pesquisa
+   ↓                                                            ⟋
 /angulos        1 tema → 5 ângulos → o escolhido vira formato
    ↓
 /calendario     os ângulos viram pauta do mês, com data
@@ -175,7 +178,7 @@ Antes de executar qualquer tarefa, verificar se existe skill em
 |---|---|
 | Começo do contrato | `/instalar` → `/diagnostico` → `/marca` → `/seo` |
 | Rodada de pesquisa | `/radar` — diário ou semanal, conforme o ritmo do setor |
-| Começo de mês | `/calendario` |
+| Começo de mês | `/ideias` → `/calendario` |
 | Todo dia de trabalho | `/abrir` → trabalha → `/fechar` → `/salvar` |
 | Produção | `/angulos` → `/post` · `/carrossel` · `/publicar-tema` → `/revisar` → `/aprovar-post` |
 | Toda semana | `/semana` |

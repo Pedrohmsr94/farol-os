@@ -53,10 +53,13 @@ Nenhuma peça pula uma etapa. **Todo conteúdo nasce de pesquisa, nunca de opini
 solta** — e o controle de qualidade reprova peça que não tem raiz pesquisada.
 
 ```
-/radar  →  /angulos  →  /calendario  →  produção  →  /revisar  →  /aprovar-post
-                                                                       ↓
-                        o resultado volta pro arquivo da peça  ←  /semana
-                        e realimenta o calendário do mês seguinte
+/radar   (o que mudou lá fora)  ⟍
+                                 ⟩→ /angulos → /calendario → produção
+/ideias  (o banco perene)       ⟋                                 ↓
+                                                              /revisar
+                                                                  ↓
+        o resultado volta pro arquivo da peça ← /semana ← /aprovar-post
+        e realimenta o calendário do mês seguinte
 ```
 
 ## As skills
@@ -74,9 +77,13 @@ escrever.
 `/radar` varre notícia, norma, decisão, mercado e a conversa real do público do
 nicho, e entrega 5 a 8 pautas fichadas com fato, fonte, ângulo e formato. Na
 primeira rodada ele monta o mapa de fontes daquele setor — o resto é automático,
-e dá pra agendar · `/investigar` levanta a voz real do dono, analisa os perfis de
-referência do nicho e coleta comentário do público · `/seo` roda os 7 passos de
-SEO e GEO, do levantamento de demanda a aparecer nas respostas do ChatGPT.
+e dá pra agendar · `/ideias` gera o conteúdo que não depende de notícia: pergunta
+que chega toda semana no WhatsApp, objeção de quem não fechou, bastidor, prova,
+mito do setor, o que o dono repete em toda reunião. Doze fontes de ideia, mais as
+linhas editoriais e a fatia de cada uma no mês · `/investigar` levanta a voz real
+do dono, analisa os perfis de referência do nicho e coleta comentário do público ·
+`/seo` roda os 7 passos de SEO e GEO, do levantamento de demanda a aparecer nas
+respostas do ChatGPT.
 
 **Planejamento e produção**
 
