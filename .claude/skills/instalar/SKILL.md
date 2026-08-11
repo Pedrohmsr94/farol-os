@@ -78,13 +78,27 @@ marcar como primeira tarefa do `/diagnostico`.
 15. "Tem data marcada no calendário dela? Sazonalidade, campanha, fechamento,
     evento."
 
+## Fase 5 — O nicho
+
+Essas três alimentam o `/radar`, que é o que faz o conteúdo nascer de pesquisa em
+vez de opinião. Não pular.
+
+16. "Quando alguma coisa muda no mundo e o telefone dessa empresa toca, o que
+    mudou?"
+17. "Que órgão, entidade, conselho ou publicação manda no setor dela?"
+18. "Onde o cliente final dela reclama e tira dúvida na internet?"
+
+Registrar as respostas em `_memoria/empresa.md`, numa seção **"O nicho"**. O
+`/radar` usa elas na primeira rodada pra montar `pesquisa/fontes.md` — e é lá que
+a pesquisa de verdade acontece, não aqui.
+
 ---
 
 ## Preenchimento
 
 | Arquivo | Vem das perguntas |
 |---|---|
-| `_memoria/empresa.md` | 1-9 |
+| `_memoria/empresa.md` | 1-9, e 16-18 na seção "O nicho" |
 | `_memoria/operacao.md` | 10-12 |
 | `_memoria/estrategia.md` | 13-15 |
 | `indice.md` | nome da empresa, fase, data |
@@ -111,7 +125,7 @@ anotar em `estrategia.md` que o objetivo ainda precisa de número.
 
 ---
 
-## Fase 5 — Fechamento
+## Fase 6 — Fechamento
 
 Mostrar:
 
@@ -123,6 +137,7 @@ Mostrar:
 ✓ CLAUDE.md        seção da empresa preenchida
 ○ Guia de marca    em branco — roda /marca
 ○ Diagnóstico      não feito — roda /diagnostico
+○ Fontes do nicho  não montadas — a 1ª rodada do /radar monta
 ```
 
 **Se a pasta tem nome genérico**, gerar slug da empresa (minúscula, sem acento,
@@ -141,8 +156,11 @@ Terminar:
 
 > "Pronto. O sistema já conhece a <empresa>.
 >
-> Próximo passo é o `/diagnostico` — é ele que vira o documento da primeira
-> reunião. Depois o `/marca`, pra nenhum texto sair genérico.
+> A ordem daqui:
+> 1. `/diagnostico` — vira o documento da primeira reunião
+> 2. `/marca` — pra nenhum texto sair genérico
+> 3. `/radar` — a primeira rodada monta o mapa de fontes do nicho. É a rodada
+>    mais importante do contrato, e depois dela a pesquisa fica automática
 >
 > No dia a dia: `/abrir` no começo, `/fechar` no fim."
 

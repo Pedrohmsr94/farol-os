@@ -47,32 +47,66 @@ rm -rf .git && git init && git add -A && git commit -m "Farol OS instalado"
 
 ---
 
+## A esteira
+
+Nenhuma peça pula uma etapa. **Todo conteúdo nasce de pesquisa, nunca de opinião
+solta** — e o controle de qualidade reprova peça que não tem raiz pesquisada.
+
+```
+/radar  →  /angulos  →  /calendario  →  produção  →  /revisar  →  /aprovar-post
+                                                                       ↓
+                        o resultado volta pro arquivo da peça  ←  /semana
+                        e realimenta o calendário do mês seguinte
+```
+
 ## As skills
 
 **Começo de contrato**
 
-`/instalar` monta a memória da empresa numa entrevista ·
-`/diagnostico` mapeia onde o marketing está furado hoje — canais, funil, quem
-faz o quê, o que é medido — e vira o documento que você mostra na primeira
-reunião · `/marca` extrai voz, público e território de palavras, e gera o guia
-que todas as outras skills leem antes de escrever.
+`/instalar` monta a memória da empresa numa entrevista · `/diagnostico` mapeia
+onde o marketing está furado hoje — canais, funil, quem faz o quê, o que é
+medido — e vira o documento da primeira reunião · `/marca` extrai voz, público e
+território de palavras, e gera o guia que todas as outras skills leem antes de
+escrever.
 
-**Produção**
+**Pesquisa**
 
-`/calendario` monta a pauta do mês a partir da estratégia e do que já rendeu ·
-`/post` escreve o conteúdo na voz da marca e joga na fila de aprovação.
+`/radar` varre notícia, norma, decisão, mercado e a conversa real do público do
+nicho, e entrega 5 a 8 pautas fichadas com fato, fonte, ângulo e formato. Na
+primeira rodada ele monta o mapa de fontes daquele setor — o resto é automático,
+e dá pra agendar · `/investigar` levanta a voz real do dono, analisa os perfis de
+referência do nicho e coleta comentário do público · `/seo` roda os 7 passos de
+SEO e GEO, do levantamento de demanda a aparecer nas respostas do ChatGPT.
+
+**Planejamento e produção**
+
+`/angulos` pega um tema e devolve 5 ângulos narrativos diferentes, depois mostra
+como o escolhido vira carrossel, reel, LinkedIn ou artigo — é o que faz uma
+pesquisa render quatro semanas de conteúdo em vez de um post · `/calendario`
+monta a pauta do mês a partir dos ângulos, da estratégia e do que já rendeu ·
+`/post` escreve a peça de texto · `/carrossel` gera os slides 1080×1350 na
+identidade da marca, com legenda · `/publicar-tema` faz o pacote completo:
+artigo, carrossel e as três legendas, amarrados.
+
+**Qualidade e publicação**
+
+`/revisar` julga a peça contra critério escrito e devolve veredito — aprovado,
+aprovado com ajustes ou reprovado, com o trecho problemático citado. Roda em
+subagente pra ter olhos frescos · `/aprovar-post` publica e registra.
 
 **Ritmo**
 
-`/semana` fecha a semana: o que saiu, o que rendeu, o que trava ·
-`/relatorio` fecha o mês num documento que o cliente entende — sem esconder o
-que caiu.
+`/semana` fecha a semana e preenche o resultado das peças publicadas — é o que
+faz o sistema aprender · `/relatorio` fecha o mês num documento que o cliente
+entende, sem esconder o que caiu.
 
-**Operação**
+**Operação e apoio**
 
-`/abrir` carrega o contexto antes de trabalhar · `/fechar` destila a conversa
-pra memória · `/salvar` faz commit e push · `/atualizar` varre o repo e corrige
-a memória desatualizada.
+`/abrir` carrega o contexto · `/fechar` destila a conversa pra memória ·
+`/salvar` faz commit e push · `/atualizar` varre o repo e corrige o que
+desencontrou · `/mapear-rotinas` transforma o que você repete em skill nova ·
+`/analisar-dados`, `/email-profissional` e `/responder-avaliacoes` para o dia a
+dia.
 
 ---
 

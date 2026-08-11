@@ -35,3 +35,19 @@ o que está abandonado e o que nunca teve.)*
 
 *(Campanha, agência anterior, impulsionamento, panfleto. O que deu certo, o que
 não deu, e por quê. Isso evita repetir erro caro.)*
+
+## O nicho
+
+*(Alimenta o `/radar`. A primeira rodada dele transforma isso em
+`pesquisa/fontes.md`, que é o mapa de onde a pesquisa vai buscar todo dia.)*
+
+**Quando muda no mundo, o telefone toca por quê:**
+*(a mudança lá fora que vira demanda aqui dentro — prazo fiscal, norma nova,
+decisão, preço de insumo, safra, campanha sazonal)*
+
+**Quem manda no setor:**
+*(órgão, conselho, agência reguladora, entidade, publicação de referência)*
+
+**Onde o cliente final conversa:**
+*(grupo, fórum, canal de YouTube, seção de comentário, reviews — onde ele
+reclama e tira dúvida com as palavras dele)*

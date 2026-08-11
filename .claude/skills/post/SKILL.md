@@ -7,11 +7,19 @@ description: >
   sobre Y", "cria a legenda", "/post", ou apontar uma linha do calendário.
 ---
 
-# /post — Produção de conteúdo
+# /post — Peça de texto
 
 Escreve o que está na pauta, na voz da empresa, e joga na fila de aprovação.
 
 Saída: `conteudo/fila/AAAA-MM-DD-tema-curto.md`, a partir de `templates/post.md`.
+
+**A skill certa entre as três de produção:**
+
+| Pedido | Skill |
+|---|---|
+| Legenda, post de texto, roteiro de reel, post de LinkedIn | `/post` — é aqui |
+| Slides visuais em PNG | `/carrossel` |
+| Artigo + carrossel + 3 legendas amarrados | `/publicar-tema` |
 
 ---
 
@@ -42,9 +50,19 @@ Antes da primeira frase, saber:
   no WhatsApp, derrubar uma objeção, anunciar. "Engajamento" não é objetivo
 - **Pra quem.** O recorte, não "todo mundo"
 - **Que prova sustenta.** Se o post afirma algo, o que respalda
+- **De qual pesquisa ele nasceu.** Briefing do `/radar`, documento de ângulos,
+  tema de SEO. Peça sem raiz de pesquisa é reprovada no `/revisar`
 
 Se faltar prova, perguntar antes de escrever — não preencher com número
 plausível.
+
+**Se o tema ainda não passou pelo `/angulos`**, oferecer:
+
+> "Esse tema dá pra contar de uns cinco jeitos. Rodo o `/angulos` antes? O
+> primeiro ângulo que vem à cabeça costuma ser o que todo mundo já publicou —
+> e os quatro que sobram viram pauta do mês que vem."
+
+Se o operador quiser seguir direto, seguir. Não travar.
 
 ---
 
@@ -85,6 +103,10 @@ Três checagens, sempre, antes de mostrar:
 
 Post que falha na 1 é o mais comum. Ele parece bom e não é.
 
+Isso é auto-checagem, não revisão. A revisão de verdade é o `/revisar`, no
+passo 5 — e ela roda com olhos frescos justamente porque quem escreveu não
+enxerga o próprio vício.
+
 ---
 
 ## Passo 4 — Salvar e mostrar
@@ -100,20 +122,27 @@ Objetivo: <o que ele tem que fazer>
 Preciso de você: <foto, dado, aprovação que falta>
 ```
 
-## Passo 5 — Aprovação
+## Passo 5 — Revisar
 
-Quando o operador voltar dizendo que o cliente aprovou:
+Antes de mandar pro cliente, rodar `/revisar`. Ele julga contra `criterios.md` e
+devolve veredito.
 
-- Mover o arquivo de `conteudo/fila/` pra `conteudo/publicados/`
-- Marcar `status: publicado` e a data
-- Atualizar a linha no calendário
+**REPROVADO** volta pra reescrita, não vai pro cliente com ressalva. Mandar peça
+reprovada dizendo "tem uns pontinhos" é como o padrão se perde.
 
-Quando voltar com **correção do cliente**, aplicar — e perguntar:
+## Passo 6 — Aprovação e publicação
+
+Peça aprovada pelo cliente → `/aprovar-post`. Ele move pra `conteudo/publicados/`,
+marca a data e atualiza o calendário.
+
+Quando o cliente voltar com **correção**, aplicar — e perguntar:
 
 > "Isso é gosto do dia ou é regra da marca? Se for regra, salvo no guia pra
 > não acontecer de novo."
 
-É assim que o guia melhora sozinho ao longo do contrato.
+Regra vai pro `marca/guia-de-marca.md` **e** pro bloco "Bloqueios deste cliente"
+em `.claude/skills/revisar/criterios.md`. É assim que o sistema para de errar a
+mesma coisa duas vezes.
 
 ---
 

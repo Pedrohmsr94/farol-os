@@ -134,11 +134,26 @@ o que separa guia que funciona de guia que fica bonito na pasta.
 
 ---
 
-## Passo 6 — Fechar
+## Passo 6 — Levar pro controle de qualidade
+
+O guia é a régua, mas quem julga peça é o `/revisar`. Traduzir o guia pra lá:
+
+Abrir `.claude/skills/revisar/criterios.md` e preencher o **bloqueio 10 —
+"Bloqueios deste cliente"** com:
+
+- Cada assunto proibido do guia
+- A regra do conselho ou órgão que regula o setor, quando houver
+- As palavras queimadas e as promessas que o setor não permite
+
+Sem esse passo, a revisão roda só com os critérios genéricos — e o genérico não
+conhece o setor do cliente. É onde passa o erro que custa caro.
+
+## Passo 7 — Fechar
 
 Marcar `**Status:** preenchido em AAAA-MM-DD` no topo do arquivo.
 
-> "Guia pronto. Toda skill que escreve lê ele antes agora.
+> "Guia pronto. Toda skill que escreve lê ele antes, e o `/revisar` já está
+> calibrado pro setor.
 >
 > Quando o cliente reclamar de algum texto, me fala — a correção vira linha
 > nova aqui em vez de virar retrabalho toda vez."

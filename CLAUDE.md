@@ -110,16 +110,57 @@ nome do arquivo. Quando a frase pedir outro texto, alias:
 
 - `_memoria/` — o que o Claude lê toda sessão. Prosa curta e curada
 - `_memoria/fontes/` — dump bruto: transcrição de reunião, briefing, print. Não digerido
-- `marca/` — voz, público, território de palavras, referência visual
+- `marca/` — voz, público, território de palavras, referência visual, logo
 - `diagnostico/` — o retrato de onde o marketing estava quando começou
-- `conteudo/calendario.md` — a pauta
+- `pesquisa/` — a camada que faz o conteúdo não ser opinião solta
+  - `pesquisa/fontes.md` — o mapa de fontes do nicho desse cliente
+  - `pesquisa/radar/` — briefings de pauta
+  - `pesquisa/angulos/` — os ângulos de cada tema
+  - `pesquisa/investigacoes/` — voz real do dono, análise de nicho, comentários
+  - `pesquisa/seo/` — os 7 passos de SEO e GEO
+- `conteudo/calendario.md` — a pauta do mês
 - `conteudo/fila/` — o que está escrito esperando aprovação
 - `conteudo/publicados/` — o que foi ao ar, com data e resultado
 - `relatorios/` — o que aconteceu, semana a semana e mês a mês
 - `notas/` — o destilado. Uma nota, um assunto
 - `notas/privado/` — fora do git. Nunca sobe
 - `dados/` — export de plataforma, planilha, print. Matéria-prima de relatório
+- `saidas/` — documento pontual que não é peça de conteúdo
 - `templates/` — moldes
+
+---
+
+## A esteira
+
+Nenhuma peça pula uma etapa. É isso que separa conteúdo que constrói autoridade de
+conteúdo que só ocupa o feed.
+
+```
+/radar          pesquisa → pautas fichadas, com fato e fonte
+   ↓
+/angulos        1 tema → 5 ângulos → o escolhido vira formato
+   ↓
+/calendario     os ângulos viram pauta do mês, com data
+   ↓
+/post           peça de texto                  ⟍
+/carrossel      peça visual + legenda           ⟩ produção
+/publicar-tema  artigo + carrossel + legendas  ⟋
+   ↓
+/revisar        controle de qualidade. Reprova, volta
+   ↓
+/aprovar-post   publica e registra
+   ↓
+/semana         o resultado volta pro arquivo da peça
+   ↓
+                e realimenta o /calendario do mês seguinte
+```
+
+**Todo conteúdo nasce de pesquisa, nunca de opinião solta.** Peça sem raiz de
+pesquisa é reprovada pelo `/revisar` (bloqueio 9). Não é rigor decorativo: é o que
+impede o cliente de virar mais um perfil publicando o que todo mundo já publicou.
+
+Alimentando a esteira por fora: `/investigar` (voz real, nicho, comentários do
+público) e `/seo` (demanda, concorrência, GMB, GEO).
 
 ---
 
@@ -132,10 +173,11 @@ Antes de executar qualquer tarefa, verificar se existe skill em
 
 | Quando | O que roda |
 |---|---|
-| Começo do contrato | `/instalar` → `/diagnostico` → `/marca` |
+| Começo do contrato | `/instalar` → `/diagnostico` → `/marca` → `/seo` |
+| Rodada de pesquisa | `/radar` — diário ou semanal, conforme o ritmo do setor |
 | Começo de mês | `/calendario` |
 | Todo dia de trabalho | `/abrir` → trabalha → `/fechar` → `/salvar` |
-| Produção | `/post` |
+| Produção | `/angulos` → `/post` · `/carrossel` · `/publicar-tema` → `/revisar` → `/aprovar-post` |
 | Toda semana | `/semana` |
 | Todo mês | `/relatorio` |
 

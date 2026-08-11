@@ -27,9 +27,10 @@ Curto. Carrega contexto e devolve o estado do cliente em poucas linhas.
 
    E parar.
 
-3. Conferir três coisas e mencionar só quando forem verdade:
+3. Conferir quatro coisas e mencionar só quando forem verdade:
    - `marca/guia-de-marca.md` em branco → avisar que conteúdo vai sair genérico
    - `diagnostico/diagnostico.md` não existe → avisar que não tem baseline
+   - `pesquisa/fontes.md` não existe → avisar que o `/radar` ainda não foi montado
    - itens em "Em aberto" no `indice.md` parados há mais de 15 dias
 
 4. Responder no formato:
@@ -38,10 +39,14 @@ Curto. Carrega contexto e devolve o estado do cliente em poucas linhas.
 <Empresa> — <o que vende, 5-8 palavras>
 Objetivo: <objetivo do trimestre em uma frase>
 Fila: <n> na aprovação · <n> pauta sem escrever
+Estoque: <n> pautas do radar não usadas · último radar <data>
 Aberto: <o item mais velho, ou "nada">
 
 O que vamos fazer?
 ```
+
+A linha "Estoque" é o que evita a pergunta "sobre o que a gente posta hoje?".
+Se houver pauta guardada, ela já está ali.
 
 5. Não listar arquivos lidos. Não confirmar leitura.
 

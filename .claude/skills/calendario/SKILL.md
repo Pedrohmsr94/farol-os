@@ -28,6 +28,22 @@ Saída: uma seção nova no topo de `conteudo/calendario.md`.
 - `conteudo/publicados/` — o rodapé "Resultado" dos últimos dois meses
 - `conteudo/calendario.md` — o que ficou como `pauta` e nunca foi escrito
 
+**E o estoque de pesquisa, que é de onde a pauta deve sair:**
+
+- `pesquisa/radar/resumo-semanal-*.md` — as pautas mais fortes de cada semana
+- `pesquisa/radar/` — os briefings do mês, incluindo os "Sinais fracos" que
+  cresceram e as perguntas capturadas do público
+- `pesquisa/angulos/` — **os ângulos que foram gerados e não viraram peça**. Cada
+  um é uma pauta pronta, com tese e primeira linha escritas. Olhar aqui antes de
+  inventar tema novo
+- `pesquisa/seo/05-estrategia-conteudo.md` — a lista mestra de temas com demanda
+
+Se `pesquisa/radar/` estiver vazio, avisar:
+
+> "Não tem pesquisa no estoque, então essa pauta vai sair de contexto e não de
+> varredura. Rodo o `/radar` antes? São uns 15 minutos e muda a qualidade do mês
+> inteiro."
+
 Se o guia de marca estiver em branco, avisar e perguntar se segue assim mesmo.
 
 Se `_memoria/estrategia.md` não tiver objetivo do trimestre, parar e perguntar.
@@ -75,9 +91,14 @@ fechamento, feriado que muda o horário, evento da cidade.
 1. Que dúvida ou objeção ele ataca?
 2. Como ele ajuda o objetivo do trimestre?
 3. A empresa tem prova pra sustentar o que vai afirmar?
+4. **De qual pesquisa ele nasceu?** Briefing do `/radar`, documento de ângulos,
+   tema de SEO ou pergunta real capturada do público — com o caminho do arquivo
 
 Se a 3 for não, o tema muda ou entra como pedido ao cliente ("preciso de uma
 foto do serviço pronto pra esse aqui").
+
+Se a 4 for "de nenhuma", o tema não entra. Ele seria reprovado no `/revisar`
+depois de escrito, e aí o trabalho já foi feito.
 
 ---
 
@@ -90,13 +111,16 @@ Seção nova no topo de `conteudo/calendario.md`:
 
 **Objetivo do mês:** <como esse mês empurra o objetivo do trimestre>
 
-| Data | Tema | Formato | Canal | Status | Arquivo |
-|---|---|---|---|---|---|
-| 03/09 | Quanto custa atrasar a entrega do IR | carrossel | Instagram | pauta | — |
+| Data | Tema | Formato | Canal | Status | Origem | Arquivo |
+|---|---|---|---|---|---|---|
+| 03/09 | Quanto custa atrasar a entrega do IR | carrossel | Instagram | pauta | radar 28/08 | — |
 ```
 
-Nome do arquivo já definido aqui (`AAAA-MM-DD-tema-curto.md`), mesmo antes de
-existir — é assim que o `/post` sabe onde salvar.
+Nome do arquivo já definido aqui (`AAAA-MM-DD-tema-curto`), mesmo antes de
+existir — é assim que o `/post` e o `/carrossel` sabem onde salvar.
+
+A coluna **Origem** aponta a pesquisa de onde o tema saiu. Ela é o que permite,
+no fim do mês, responder se o conteúdo veio de pesquisa ou de improviso.
 
 ---
 
@@ -106,10 +130,11 @@ Mostrar a tabela e:
 
 ```
 <n> pautas pra <mês>. <n> resolvem dúvida · <n> prova · <n> oferta · <n> teste
+Origem: <n> do radar · <n> de ângulos guardados · <n> de SEO
 
 Preciso de você: <lista do que depende do cliente — foto, dado, autorização>
 
-Escrevo o primeiro agora? (/post)
+Escrevo o primeiro agora? (/post, /carrossel ou /publicar-tema)
 ```
 
 Atualizar `indice.md` se alguma pauta virou pendência com o cliente.
