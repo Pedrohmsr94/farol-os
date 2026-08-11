@@ -21,14 +21,14 @@ Um repo, uma empresa. Você clona de novo pro próximo cliente.
 Abre o Claude Code em qualquer pasta e cola:
 
 ```
-Clona o https://github.com/SEU-USUARIO/farol-os.git na pasta atual,
+Clona o https://github.com/Pedrohmsr94/farol-os.git na pasta atual,
 entra nela e roda o /instalar.
 ```
 
 ### Pelo terminal
 
 ```
-git clone https://github.com/SEU-USUARIO/farol-os.git nome-do-cliente
+git clone https://github.com/Pedrohmsr94/farol-os.git nome-do-cliente
 cd nome-do-cliente
 code .
 ```
@@ -118,6 +118,10 @@ O Claude lê antes de cada resposta. Quanto melhor a memória, melhor o sistema.
 `marca/` é a voz. Sem ela, todo texto sai com cara de qualquer empresa do
 mesmo setor — o defeito mais caro do marketing terceirizado.
 
+`pesquisa/` é o que faz o conteúdo não ser chute. Pauta que nasceu de fonte
+primária, ângulos guardados, a voz real do dono, o que o público pergunta com as
+palavras dele. Sem isso o sistema vira gerador de post bonito e vazio.
+
 `conteudo/` e `relatorios/` são o resultado, com data e histórico. No fim do
 contrato o cliente tem um registro do que foi feito, não uma pasta de PNG solto.
 
@@ -132,3 +136,13 @@ definida, e não maquia queda em adjetivo.
 - Git
 - VS Code (opcional, mas é onde fica confortável)
 - [Obsidian](https://obsidian.md) (opcional — abre a pasta como cofre e vira grafo)
+- Node + Playwright (só pro `/carrossel` renderizar os PNGs)
+
+---
+
+## Licença
+
+Uso licenciado, não redistribuível. Ver [LICENSE.md](LICENSE.md).
+
+O repositório é público pra facilitar a instalação de quem tem licença — isso
+não torna o sistema livre pra revenda ou republicação.
