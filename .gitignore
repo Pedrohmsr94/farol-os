@@ -33,3 +33,6 @@ dados/*
 
 # Privado do cliente — nunca sobe pro GitHub
 notas/privado/
+
+# Log do radar automatico - so na maquina
+pesquisa/radar/_log/
