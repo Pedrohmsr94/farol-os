@@ -77,7 +77,7 @@ Cada furo precisa de três coisas:
 Furo sem evidência não entra. Se for palpite, escrever como palpite e dizer o
 que confirmaria.
 
-**Os furos mais comuns em pequena empresa** — usar como checagem, não como
+**Os furos mais comuns** — usar como checagem, não como
 lista pra encher:
 
 - Ninguém sabe de onde vem o cliente

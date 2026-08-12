@@ -88,7 +88,7 @@ pesquisa por trás, reprova.
    gente boa. Carisma sem substância é ajuste; peça inteira assim vira bloqueio 9.
 3. **Dado sem data.** Todo número precisa de quando. Custo do ano passado somado a
    preço de hoje, como se fossem o mesmo ciclo, é erro clássico.
-4. **CTA que convida demanda em massa.** Empresa pequena tem capacidade de entrega
+4. **CTA que convida demanda em massa.** Toda empresa tem capacidade de entrega
    limitada. Chamada aberta pra todo mundo é problema de operação, não de marketing.
    CTA deveria qualificar, não convidar.
 5. **Formato trocado.** "Arraste pro lado" em post de LinkedIn, hashtag demais no

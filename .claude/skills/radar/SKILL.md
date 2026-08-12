@@ -215,7 +215,7 @@ Pra dia fraco. Assunto que vale em qualquer semana:
 - Nunca citar concorrente pelo nome
 - Sem alarmismo, clickbait, promessa de resultado ou ataque político
 - Pauta que gera demanda acima da capacidade de entrega da empresa merece aviso na
-  ficha. Em empresa pequena o gargalo costuma ser entrega, não demanda
+  ficha. Em operação enxuta o gargalo costuma ser entrega, não demanda
 
 ## Rodar sozinho (agendado)
 

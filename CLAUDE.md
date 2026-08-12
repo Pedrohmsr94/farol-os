@@ -183,6 +183,8 @@ Antes de executar qualquer tarefa, verificar se existe skill em
 | Produção | `/angulos` → `/post` · `/carrossel` · `/publicar-tema` → `/revisar` → `/aprovar-post` |
 | Toda semana | `/semana` |
 | Todo mês | `/relatorio` |
+| Teve uma ideia de comando | `/nova-skill` |
+| Percebeu que repete algo | `/mapear-rotinas` |
 
 O `/fechar` é o que faz a sessão virar memória em vez de evaporar.
 
@@ -229,13 +231,21 @@ pergunta simples, ou mudança que o bloco acima já salvou.
 
 ## Criação de skills
 
-Quando o operador pedir skill nova:
+O sistema é extensível de propósito. As 24 skills cobrem o que é comum a
+qualquer operação de marketing; o que é do jeito de trabalhar do operador, ele
+constrói.
 
-1. Perguntar se é específica desse cliente ou útil em qualquer:
-   - Específica → `.claude/skills/<nome>/SKILL.md` (aqui)
-   - Universal → `~/.claude/skills/<nome>/SKILL.md` (global, vale em todos os clientes)
-2. Ler `_memoria/empresa.md` e `marca/guia-de-marca.md` pra calibrar
-3. Se precisar de arquivo de apoio, criar dentro da pasta da skill
+| Ponto de partida | Skill |
+|---|---|
+| "quero um comando que faça X" — já sabe o que quer | `/nova-skill` |
+| "o que dá pra automatizar?" — não sabe ainda | `/mapear-rotinas` |
+
+As duas terminam no mesmo lugar: `SKILL.md` escrito, rodado uma vez num caso
+real e registrado aqui. Skill que nunca rodou é palpite escrito em markdown.
+
+Escopo: específica do cliente vai em `.claude/skills/<nome>/SKILL.md`; jeito de
+trabalhar do operador vai em `~/.claude/skills/<nome>/SKILL.md` e vale em todos
+os clientes.
 
 Ao concluir tarefa que não tinha skill mas parece repetível, perguntar:
 

@@ -2,7 +2,7 @@
 
 > O marketing de uma empresa, organizado dentro do Claude Code.
 
-Marketing de pequena empresa não quebra por falta de ideia. Quebra porque
+Marketing de empresa não quebra por falta de ideia. Quebra porque
 ninguém sabe o que foi feito mês passado, ninguém definiu como a marca fala, e
 o relatório é um print de alcance mandado no WhatsApp.
 
@@ -111,9 +111,18 @@ entende, sem esconder o que caiu.
 
 `/abrir` carrega o contexto · `/fechar` destila a conversa pra memória ·
 `/salvar` faz commit e push · `/atualizar` varre o repo e corrige o que
-desencontrou · `/mapear-rotinas` transforma o que você repete em skill nova ·
-`/analisar-dados`, `/email-profissional` e `/responder-avaliacoes` para o dia a
-dia.
+desencontrou · `/analisar-dados`, `/email-profissional` e `/responder-avaliacoes`
+para o dia a dia.
+
+**O sistema cresce com você**
+
+`/nova-skill` pega uma ideia sua de comando, escreve a skill, roda uma vez num
+caso real e registra no sistema · `/mapear-rotinas` faz o caminho inverso:
+entrevista o que você repete toda semana e propõe o que vale automatizar.
+
+As 25 skills cobrem o que é comum a qualquer operação de marketing. O que é do
+seu jeito de trabalhar, você constrói — e escolhe se vale só naquele cliente ou
+em todos.
 
 ---
 

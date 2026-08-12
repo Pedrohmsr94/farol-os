@@ -39,7 +39,7 @@ Linha editorial não é "tipo de post". É **o que cada grupo de conteúdo tem q
 conquistar** na cabeça de quem lê. Sem isso, o calendário vira lista de assunto
 solto e ninguém sabe por que aquele post existe.
 
-O padrão que serve pra quase toda empresa pequena — ajustar ao cliente:
+O padrão que serve pra quase toda empresa — ajustar ao cliente:
 
 | # | Linha | O que conquista | Fatia |
 |---|---|---|---|
