@@ -83,32 +83,87 @@ Copiar estrutura de quem já saturou o nicho é a forma mais rápida de virar ma
 
 ---
 
-## Modo `comentarios` — o que o público realmente pergunta
+## Modo `comentarios` — a voz do público, sem filtro
 
 A fala literal do público é o insumo mais valioso do sistema inteiro, e o mais
 difícil de conseguir por busca aberta.
 
-**Onde:**
-
-- Comentários de vídeos do nicho no YouTube
-- Grupos e fóruns onde o público se junta
-- Reviews do Google — do cliente e dos concorrentes (elogio e reclamação)
-- Perguntas em portais e seções de comentário
-- O próprio WhatsApp da empresa: as dúvidas que chegam toda semana
-
-**Ferramenta opcional:** `yt-dlp` puxa comentário de YouTube em volume:
+**Script pronto:** `scripts/coletar-comentarios.py` (requer `pip install yt-dlp`)
 
 ```bash
-yt-dlp --write-comments --skip-download --no-warnings -o "%(id)s" "<url>"
+python scripts/coletar-comentarios.py \
+  --busca "nao consigo pagar meu contador" "abri empresa e me arrependi" \
+          "caí na malha fina o que fazer" \
+  --videos 6 --comentarios 60
 ```
 
-Se não estiver instalado, coletar na mão mesmo — 30 comentários bem escolhidos
-valem mais que 3.000 sem leitura.
+### A regra que decide se isso funciona
 
-**Saída:** `pesquisa/investigacoes/comentarios/<fonte>-<AAAA-MM-DD>.md`.
+**Sempre buscar com as palavras do público, nunca com as do especialista.** Não é
+detalhe de estilo. Medido no projeto que originou esse método, mesma ferramenta,
+mesmo dia:
+
+| Busca | Comentários úteis |
+|---|---|
+| vocabulário técnico do especialista | **6** |
+| vocabulário do público, 4 variações | **655** |
+
+Cem vezes mais material, mesma ferramenta. A diferença foi só a escolha das
+palavras.
+
+Como achar as palavras certas: pegar a dor, não o serviço. Não "planejamento
+tributário" e sim "tô pagando imposto demais". Não "assessoria contábil" e sim
+"meu contador some". Não "reestruturação" e sim "não consigo pagar as contas".
+
+Termo que funcionar vai pra `pesquisa/vocabulario.md`, na tabela de buscas — e o
+que não funcionar também, na lista de baixo. Repetir busca que deu certo é mais
+barato que inventar termo novo toda rodada.
+
+### O que o script já faz
+
+Descarta elogio solto e saudação, e **ordena por sinal em vez de curtida**. Isso é
+deliberado: ordenar por curtida parece óbvio e entrega o contrário do que serve,
+porque o YouTube premia indignação e enterra a dor real embaixo de discussão
+política. Relato em primeira pessoa com vocabulário concreto vem primeiro; briga
+política vai pro fim.
+
+O vocabulário concreto do nicho ele lê de `pesquisa/vocabulario.md`. Sem esse
+arquivo o script roda, mas ordena pior — na primeira rodada, preencher com as
+palavras que aparecem no material e rodar de novo.
+
+### A triagem fina é sua
+
+O script faz a grossa. Ao ler o corpus, separar em três:
+
+1. **Dor real** — pessoa falando da própria situação. É o material nobre: vai pro
+   `/marca` calibrar voz e pro `/ideias` como fonte 1
+2. **Dúvida concreta** — pergunta que dá pra responder com conteúdo. Vai direto pro
+   `/angulos`, família "A pergunta"
+3. **Ruído** — política, moralismo, autopromoção de concorrente. Descartar
+
+**Saída:** o script salva sozinho em
+`pesquisa/investigacoes/comentarios/<termo>-<AAAA-MM-DD>.md`.
+
+Ao terminar, escrever ao lado um `leitura-<data>.md` com o que a triagem achou. O
+corpus é grande demais pra alguém reler inteiro depois — se a leitura não for
+escrita, o trabalho se perde.
+
+### Fora do YouTube
+
+O script só cobre YouTube. As outras fontes são na mão, e valem:
+
+- **Reviews do Google** — do cliente e dos concorrentes. Reclamação de concorrente
+  é o mapa do que o cliente pode prometer
+- **Instagram** — comentários nos posts do próprio cliente e nos perfis de
+  referência do nicho. Não tem coleta automática: os comentários do próprio perfil
+  saem pela Graph API (mesma configuração do `/aprovar-post`), e os dos outros
+  perfis se leem na mão
+- **Grupos e fóruns** onde o público se junta
+- **O WhatsApp da empresa** — a fonte mais rica e a mais ignorada. As dúvidas que
+  chegam toda semana já estão lá, escritas, de graça
 
 Transcrever **sem corrigir**: erro de português, gíria e repetição são exatamente o
-dado. Agrupar por tema e marcar as que aparecem várias vezes — pergunta repetida é
+dado. Agrupar por tema e marcar o que aparece várias vezes — pergunta repetida é
 pauta pronta.
 
 ---
