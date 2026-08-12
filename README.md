@@ -143,7 +143,8 @@ definida, e não maquia queda em adjetivo.
 - Git
 - VS Code (opcional, mas é onde fica confortável)
 - [Obsidian](https://obsidian.md) (opcional — abre a pasta como cofre e vira grafo)
-- Node + Playwright (só pro `/carrossel` renderizar os PNGs)
+- Node + Playwright — só pro `/carrossel`. Instala com `npm run setup` dentro da pasta do cliente
+- Python + `yt-dlp` — só pra coleta de comentários (`pip install yt-dlp`)
 
 ---
 

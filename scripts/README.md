@@ -1,5 +1,63 @@
 # Scripts
 
+## Setup (uma vez por cliente)
+
+Só precisa se for usar carrossel ou coleta de comentários.
+
+**Carrossel** — instala o Playwright e o navegador que renderiza os PNGs:
+
+```powershell
+npm run setup
+```
+
+**Coleta de comentários** — instala o yt-dlp:
+
+```powershell
+pip install yt-dlp
+```
+
+**Chaves de API** (opcional) — copiar `.env.exemplo` pra `.env` e preencher.
+O `.env` está no `.gitignore` e nunca sobe.
+
+---
+
+## Renderizar carrossel
+
+```powershell
+npm run carrossel -- conteudo/fila/2026-09-03-malha-fina
+npm run carrossel -- conteudo/fila/2026-09-03-malha-fina --formato 9:16
+```
+
+Lê o `carrossel.html` da pasta e salva `slide-01.png`, `slide-02.png`... em
+`instagram/` (ou `stories/` no 9:16).
+
+Formatos: `4:5` (1080×1350, padrão) · `1:1` (1080×1080) · `9:16` (1080×1920).
+
+**Um script pro projeto inteiro.** Não copiar pra dentro de cada pasta de peça —
+quando o layout mudar, muda aqui e vale pras próximas.
+
+## Gerar imagem por IA
+
+```powershell
+node scripts/gerar-imagem.js "PROMPT EM INGLES" conteudo/fila/<pasta>/foto-capa.png
+```
+
+Precisa de `OPENAI_API_KEY` no `.env`. Custa por imagem.
+
+Foto real da empresa vem sempre na frente. Imagem gerada serve pra fundo, textura
+e cena genérica — nunca pra fingir equipe, cliente ou resultado.
+
+## Coletar comentários do YouTube
+
+```powershell
+python scripts/coletar-comentarios.py --busca "as palavras do publico" --videos 6
+```
+
+Ver a skill `/investigar`, modo `comentarios` — a escolha das palavras de busca é
+o que decide se volta material ou lixo.
+
+---
+
 ## Radar automático
 
 Faz o `/radar` rodar sozinho, sem ninguém na frente. Todo dia útil o briefing de

@@ -36,3 +36,6 @@ notas/privado/
 
 # Log do radar automatico - so na maquina
 pesquisa/radar/_log/
+
+# Chaves de API - nunca sobem
+.env

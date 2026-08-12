@@ -1,0 +1,13 @@
+{
+  "name": "farol-os",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Farol OS — scripts de renderizacao de material visual",
+  "scripts": {
+    "carrossel": "node scripts/render-carrossel.js",
+    "setup": "npm install && npx playwright install chromium"
+  },
+  "devDependencies": {
+    "playwright": "^1.49.0"
+  }
+}

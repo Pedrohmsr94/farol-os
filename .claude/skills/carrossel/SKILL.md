@@ -123,9 +123,29 @@ Renderizar PNG de texto não aprovado é retrabalho garantido.
 
 ### Passo 3 — Fotos (se for o tipo 2)
 
-Foto real da empresa primeiro. Se for gerar por IA e houver chave configurada:
-prompt em inglês, mostrar antes de usar, e **nunca gerar rosto identificável de
-pessoa** — ninguém quer descobrir que a "equipe" do site não existe.
+**Foto real da empresa primeiro.** Sempre. Pedir pro cliente mandar antes de
+cogitar gerar.
+
+Se não houver e o operador quiser gerar por IA:
+
+```bash
+node scripts/gerar-imagem.js "PROMPT EM INGLES" conteudo/fila/<pasta>/foto-capa.png
+```
+
+Precisa de `OPENAI_API_KEY` no `.env` da raiz (copiar de `.env.exemplo`). Custa
+por imagem — avisar o operador antes de gerar em série.
+
+Prompt em inglês, no padrão:
+
+```
+Professional [tipo] photography of [assunto], [detalhes], [ambiente],
+[luz] lighting, shallow depth of field, shot from [ângulo],
+editorial quality
+```
+
+Mostrar a imagem antes de usar. E **nunca gerar rosto identificável de pessoa** —
+imagem de IA fingindo equipe, cliente ou resultado é o tipo de coisa que destrói
+confiança quando alguém percebe. Serve pra fundo, textura e cena genérica.
 
 ### Passo 4 — HTML + PNG
 
@@ -143,16 +163,20 @@ pessoa** — ninguém quer descobrir que a "equipe" do site não existe.
    </div>
    ```
 
-2. Criar `render.js` na mesma pasta — Node + Playwright, abre o HTML e tira
-   screenshot de cada `.slide` em 1080x1350:
+2. Renderizar com o script do projeto. **Não criar `render.js` dentro da pasta
+   da peça** — o script é um só, e quando o layout mudar vale pras próximas:
 
    ```bash
-   node render.js
+   npm run carrossel -- conteudo/fila/<AAAA-MM-DD>-<slug>
    ```
 
-   Dá pra reaproveitar o `node_modules` de uma peça anterior:
+   Formato vertical de story: `-- --formato 9:16`
+
+   Se der erro de módulo não encontrado, o setup ainda não foi feito. Rodar uma
+   vez no projeto:
+
    ```bash
-   NODE_PATH="<pasta-anterior>/node_modules" node render.js
+   npm run setup
    ```
 
 3. Mostrar slide 1, 2 e o CTA final renderizados. Aprovados, mostrar o resto.
@@ -163,11 +187,11 @@ pessoa** — ninguém quer descobrir que a "equipe" do site não existe.
 conteudo/fila/<AAAA-MM-DD>-<slug>/
   texto.md              ← texto aprovado
   carrossel.html
-  render.js
   instagram/            ← slide-01.png ... slide-NN.png
   legenda.md
   legenda-linkedin.md   ← se pedido
   foto-*.png            ← se houver
+  revisao.md            ← do /revisar
 ```
 
 Atualizar o status da linha em `conteudo/calendario.md` pra `escrito`.
@@ -201,7 +225,8 @@ Depois: `/aprovar-post` publica.
 - Carrossel: 1080x1350 (4:5). Reels/TikTok: 1080x1920 (9:16), só quando pedido
 - Sempre checar a sequência de capa do feed antes de definir capa nova
 - Sempre gerar `legenda.md` automaticamente no fim
-- Um único `carrossel.html` com todos os slides + `render.js` ao lado. CSS inline
+- Um único `carrossel.html` com todos os slides, CSS inline. A renderização é
+  pelo `npm run carrossel` — não duplicar script dentro da pasta da peça
 - Não repetir layout entre slides
 - Não renderizar PNG antes do texto aprovado
 - **Não escrever número no slide sem a fonte no `texto.md`.** O slide não cabe a
