@@ -4,10 +4,11 @@ description: >
   Levanta matéria-prima de linguagem e de padrão pra alimentar o conteúdo, em três
   modos: "voz" (minera material real do dono pra extrair como ele fala de verdade),
   "nicho" (analisa canais e perfis de referência pra mapear ganchos, estruturas e
-  temas saturados) e "comentarios" (puxa comentário real do público). Analisar,
-  nunca copiar. Use quando o usuário disser "investiga", "analisa esse canal",
-  "como o pessoal do nicho fala disso", "extrai comentários", "qual o tom real do
-  dono", "/investigar".
+  temas saturados, e mede a saturação de anúncios ativos na Biblioteca de Anúncios
+  do Meta) e "comentarios" (puxa comentário real do público). Analisar, nunca
+  copiar. Use quando o usuário disser "investiga", "analisa esse canal", "como o
+  pessoal do nicho fala disso", "extrai comentários", "qual o tom real do dono",
+  "quantos anúncios ativos tem nesse tema", "biblioteca de anúncios", "/investigar".
 ---
 
 # /investigar — Voz, padrão e linguagem real
@@ -19,7 +20,7 @@ Alimenta as outras skills com matéria-prima. Não produz peça, produz insumo.
 | Modo | O que faz | Alimenta |
 |---|---|---|
 | `voz` | Minera material real do dono | `/marca`, `/angulos`, `/post`, `/carrossel` |
-| `nicho` | Analisa canais e perfis de referência | `/angulos`, `/calendario` |
+| `nicho` | Analisa canais, perfis de referência e a Biblioteca de Anúncios | `/angulos`, `/calendario` |
 | `comentarios` | Puxa comentário real do público | `/radar` (Radar de perguntas), `/angulos` |
 
 Se o operador não disser o modo, perguntar. São trabalhos bem diferentes.
@@ -80,6 +81,40 @@ caixa alta, 39 views; mesmo tema com consequência no título, 4.100" vale muito
 
 **Analisar, nunca copiar.** O objetivo é entender a lógica, não clonar a peça.
 Copiar estrutura de quem já saturou o nicho é a forma mais rápida de virar mais um.
+
+### A Biblioteca de Anúncios — saturação medida, não sentida
+
+Antes de ordenar a pauta ou gastar gravação, medir quantos anúncios **ativos**
+existem em cada território de tema. A Biblioteca de Anúncios do Meta é pública —
+facebook.com/ads/library, filtrar país, "todos os anúncios", status ativo — e
+não precisa de conta, de chave nem de API.
+
+**Como fazer:**
+
+1. Buscar cada território com as palavras do público (`pesquisa/vocabulario.md`
+   ajuda) e anotar o número de anúncios ativos por termo
+2. Classificar: **saturado** (centenas), **vazio** (menos de dez), **deserto**
+   (zero). Conferir quem são os poucos do vazio — às vezes nem são do nicho
+3. Cruzar com a capacidade de entrega (`_memoria/empresa.md`): o território
+   vazio que a operação aguenta em volume é o único em que o CTA pode abrir
+   em vez de qualificar
+4. Ler o padrão dos saturados, **sem citar nome**: como qualificam, que CTA
+   usam, que posicionamento repetem. O que ninguém está fazendo ali é o
+   registro que sobra — e costuma ser prova técnica e procedimento
+5. Cruzar com `pesquisa/investigacoes/comentarios/`: a dor mais curtida que
+   nenhum anúncio toca é a maior abertura do conjunto
+
+Medido no projeto que originou esse método, no mesmo dia: o território óbvio
+tinha **551** anúncios ativos; o território ao lado, que respondia por quase
+metade do mercado real, tinha **9**. A ordem de gravação inverteu na hora — e
+é esse tipo de decisão que essa varredura existe pra tomar.
+
+O número muda toda semana: datar a varredura e refazer junto com o modo
+`nicho`. Quando o nicho anuncia em busca, a Central de Transparência do Google
+(adstransparency.google.com) serve pro mesmo movimento.
+
+**Saída:** `pesquisa/investigacoes/anuncios-<AAAA-MM-DD>.md`. O resultado
+alimenta a ordem do `/calendario` e o campo "Risco" de cada peça no `/angulos`.
 
 ---
 
