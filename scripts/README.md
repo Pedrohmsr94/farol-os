@@ -1,23 +1,45 @@
 # Scripts
 
-## Setup (uma vez por cliente)
+| Script | O que faz | Precisa |
+|---|---|---|
+| `carrossel/gerar.py` | monta o `carrossel.html` da peça a partir do roteiro, com a marca de `identidade/` | `pyyaml` |
+| `carrossel/modelo.css` | o desenho do carrossel. Cor e fonte vêm da marca, não daqui | — |
+| `render-carrossel.js` | transforma o `carrossel.html` em PNGs 4:5, 1:1 ou 9:16 | `npm run setup` |
+| `gerar-imagem.js` | gera imagem por IA pra fundo e cena genérica | `OPENAI_API_KEY` |
+| `coletar-comentarios.py` | corpus de comentário real do YouTube, ordenado por relato em 1ª pessoa | `yt-dlp` |
+| `reel-referencia.py` | baixa um reel, transcreve por tempo e deixa o esqueleto da análise | `yt-dlp`, `faster-whisper` |
+| `perfil-de-desempenho.py` | o placar da própria conta: alcance, salvamento e abertura por formato | `META_ACCESS_TOKEN`, `META_IG_ACCOUNT_ID` |
+| `transcrever.py` | áudio de reunião → texto com `[MM:SS]` em `_memoria/fontes/`, offline | `faster-whisper` |
+| `coletores/` | números de perfil público e posts de referência (Playwright e Apify) | ver `coletores/README.md` |
+| `radar-diario.ps1` · `agendar-radar.ps1` | roda o `/radar` sozinho, todo dia útil | Claude Code no PATH |
 
-Só precisa se for usar carrossel ou coleta de comentários.
+## Setup (uma vez por máquina)
 
-**Carrossel** — instala o Playwright e o navegador que renderiza os PNGs:
+Cada parte só precisa ser instalada se for usada.
+
+**Node** — Playwright e o navegador que renderiza os PNGs e roda os coletores:
 
 ```powershell
 npm run setup
 ```
 
-**Coleta de comentários** — instala o yt-dlp:
+**Python** — yt-dlp, faster-whisper, Pillow e PyYAML:
 
 ```powershell
-pip install yt-dlp
+py -m pip install -r requirements.txt
 ```
 
+**ffmpeg** — quadros dos vídeos de referência e áudio de arquivo de vídeo:
+
+```powershell
+winget install Gyan.FFmpeg
+```
+
+Reabrir o terminal depois, pro PATH novo valer.
+
 **Chaves de API** (opcional) — copiar `.env.exemplo` pra `.env` e preencher.
-O `.env` está no `.gitignore` e nunca sobe.
+O `.env` está no `.gitignore` e nunca sobe. Todo script lê a chave da variável de
+ambiente primeiro e do `.env` da raiz depois.
 
 ---
 
@@ -50,11 +72,52 @@ e cena genérica — nunca pra fingir equipe, cliente ou resultado.
 ## Coletar comentários do YouTube
 
 ```powershell
-python scripts/coletar-comentarios.py --busca "as palavras do publico" --videos 6
+py scripts/coletar-comentarios.py --busca "as palavras do publico" --videos 6
 ```
 
 Ver a skill `/investigar`, modo `comentarios` — a escolha das palavras de busca é
 o que decide se volta material ou lixo.
+
+## Ler um reel de referência
+
+```powershell
+py scripts/reel-referencia.py https://www.instagram.com/reel/XXXX/
+py scripts/reel-referencia.py https://www.instagram.com/reel/XXXX/ --cookies chrome
+py scripts/reel-referencia.py C:\caminho\video.mp4 --slug gancho-numero
+```
+
+Sai em `pesquisa/investigacoes/reels/<slug>/`: `meta.json`, `transcricao.md` com
+o esqueleto da análise (gancho, estrutura por tempo, ritmo, o que não copiar) e o
+`video.mp4`, que fica fora do git. Instagram costuma barrar download anônimo:
+`--cookies chrome` usa a sessão do navegador (fechar o Chrome antes), ou
+`edge`/`firefox`. Analisar, nunca copiar.
+
+## Placar da própria conta
+
+```powershell
+py scripts/perfil-de-desempenho.py --posts 40
+py scripts/perfil-de-desempenho.py --posts 40 --excluir 17900000000000001,17900000000000002
+```
+
+Lê os últimos posts pela Graph API e escreve, em `pesquisa/investigacoes/desempenho/`,
+a leitura datada (`perfil-AAAA-MM-DD.md` + `.json`) e a cópia mais recente
+(`perfil-de-desempenho.md`, que o `/revisar`, o `/semana` e o `/relatorio` leem).
+Post impulsionado vai em `--excluir` — a API não separa alcance pago do orgânico.
+Métrica que a API não devolve fica `-`, nunca estimada. Rodar uma vez por mês.
+
+## Transcrever reunião
+
+```powershell
+py scripts/transcrever.py "C:\Users\voce\Downloads\kickoff.m4a" --data 2026-10-01
+```
+
+Ver a skill `/transcrever` — transcrever é o meio; o que importa é a leitura e as
+perguntas depois. O áudio fica fora do repo.
+
+## Coletores
+
+Ver `coletores/README.md`: tabela dos coletores, regras e o caminho do dado
+(coleta → mídia no mesmo dia → fichas → padrões).
 
 ---
 

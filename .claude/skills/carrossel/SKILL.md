@@ -1,233 +1,143 @@
 ---
 name: carrossel
 description: >
-  Cria carrosséis e posts visuais pra Instagram, LinkedIn e TikTok com a identidade
-  da marca do cliente. Gera um HTML estilizado e renderiza em PNG 1080x1350 via
-  Playwright, com legenda pronta no final. Suporta carrossel de texto, carrossel com
-  foto e post único. Use quando o usuário pedir "carrossel", "post pro instagram",
-  "criar imagem", "post educativo", "/carrossel".
+  Cria carrosséis e posts únicos de Instagram, LinkedIn e Facebook na identidade da
+  empresa com o modelo "editorial" (v2): uma ficha YAML vira HTML e PNG 1080x1350 via
+  scripts/carrossel/gerar.py, com mais de vinte layouts nomeados (capa, número, prova,
+  cartões, comparativo, proposta, páginas, fecho…). Lê a pauta, escreve o texto na voz
+  da marca, mostra pra aprovação, monta a ficha, renderiza e gera a legenda com a lista
+  "Antes de publicar". Use quando o usuário pedir "carrossel", "post pro instagram",
+  "vira carrossel", "monta a peça", "conteúdo visual", "criar imagem", "/carrossel".
 ---
 
-# /carrossel — Carrossel e posts visuais
+# /carrossel — Carrossel no modelo editorial (v2)
 
-Pega um tema → entrega HTML estilizado + PNGs prontos pra postar + legenda.
+Pega uma pauta → entrega a ficha YAML, o HTML, os PNGs 1080×1350, a folha de
+contato e a legenda, tudo na pasta da peça. O desenho é código; o que se edita é a
+ficha.
 
-## Dependências
+## Dependências (ler antes)
 
-- **Marca:** `marca/guia-de-marca.md` — **ler antes de criar qualquer visual**
-- **Contexto e voz:** `_memoria/empresa.md`, `marca/guia-de-marca.md`
-- **Playwright:** pra renderizar HTML em PNG
+- **Voz:** `marca/guia-de-marca.md`. Em branco = avisar e oferecer `/marca` antes
+- **Visual:** `identidade/marca-visual.yaml` (os valores que o gerador usa),
+  `identidade/design-guide.md` (o porquê, as proibições) e **`identidade/carrossel.md`**
+  (os layouts, os esqueletos, as regras de texto)
+- **Estratégia:** `conteudo/arquitetura-editorial.md` (linha, tensão, funil, o que a
+  marca nunca faz) e, se a pauta veio de lá, a ficha em `pesquisa/radar/`,
+  `pesquisa/ideias/` ou `pesquisa/angulos/`
+- **Placar:** `pesquisa/investigacoes/desempenho/perfil-de-desempenho.md` (o que
+  entrega na própria conta) e `pesquisa/referencias/padroes.md` (o que entrega no
+  nicho), quando existirem
+- **Ferramentas:** `scripts/carrossel/gerar.py` + `modelo.css`,
+  `scripts/render-carrossel.js`, `node_modules` na raiz (`npm run setup`), Python com
+  `pyyaml` (`npm run setup:python`)
 - **Saída:** `conteudo/fila/<AAAA-MM-DD>-<slug>/`
 
----
+Se `identidade/marca-visual.yaml` ainda estiver com os valores neutros (`nome: "Sua
+Empresa"`), avisar: a peça sai no visual de teste do Farol OS e não serve pra
+publicar. Oferecer preencher a identidade primeiro, a partir do brandbook.
 
-## Tipos
+## Regras que não se negociam
 
-| Tipo | Quando | Estilo |
-|---|---|---|
-| **Carrossel de texto** | educativo, lista, explicação | tipografia limpa, fundos alternados, sem foto |
-| **Carrossel com foto** | apresentação, capa com pessoa, bastidor | foto na capa com overlay + slides internos no padrão |
-| **Post único** | frase de impacto, número, depoimento | varia conforme o conteúdo |
-
-Se não estiver claro, perguntar qual dos três.
-
-Foto: a real da empresa vem sempre na frente de foto gerada. Cliente de serviço
-local com foto de banco de imagem é o cheiro mais rápido de "isso aí é terceirizado".
-
----
-
-## Estilo visual base
-
-Quando `marca/guia-de-marca.md` tiver cores e fonte, **ele manda**. Quando estiver
-vago ou em branco, usar o padrão abaixo — editorial, calmo, sóbrio. Sem clip-art,
-sem emoji decorativo, sem gradiente arco-íris, sem template genérico de IA.
-
-Não parar pra pedir `/marca`: o carrossel funciona com defaults bons. Só avisar.
-
-### Tipografia
-
-- **Fonte:** Inter (Google Fonts), pesos 400/500/600/700/800/900
-- **Título de capa:** 90-100px, weight 900, line-height 0.98, letter-spacing **-0.04em**
-- **H2 (slides internos):** 60-72px, weight 800, line-height 1.04, letter-spacing **-0.035em**
-- **Corpo:** 20-24px, weight 500, line-height 1.5
-- **Eyebrow/kicker:** 13-16px, weight 700-800, **CAIXA ALTA**, letter-spacing **0.22-0.32em**
-- **Contador de página:** 14-16px, weight 500-600, letter-spacing 0.18em, cor suave
-
-**A regra do tipo:** título grande com kerning **apertado** (-0.035em), eyebrow
-pequeno com kerning **aberto** (0.22em+). Esse contraste é o coração do estilo.
-
-### Cores
-
-Fundo + off-white + **UMA** cor de destaque. Nunca quatro cores brigando.
-
-- Fundo escuro: `#0E1116` ou `#1A1A1A`
-- Fundo claro: `#F5ECD7` (cream) ou `#FAFAF7`
-- Texto sobre escuro: `#FAFAF7`
-- Texto sobre claro: `#1A1A1A` (título) e `#444` (corpo)
-- Destaque: a cor da marca, uma só
-
-### Elementos recorrentes
-
-- **Régua fina** (3-4px de altura, 60-80px de largura, cor de destaque) entre kicker e título
-- **Logo no topo à esquerda + contador no topo à direita** em todos os slides
-- **Borda de 1px** `rgba(255,255,255,0.12)` separando rodapé do conteúdo, em slide escuro
-- **Selo circular** (200x200, borda 3px translúcida, rotate -10deg) pra data ou dado
-- **Pills** em caixa alta, padding generoso, kerning 0.2em, pra rotular a categoria
-- Padding base: 70-100px nas laterais
-
-### Layouts nomeados
-
-Cada slide tem um nome. Variar entre eles pra criar ritmo:
-
-- **CAPA** — eyebrow + título grande + subtítulo + @. Fundo: foto com overlay
-  (`rgba(12,10,9,0.55)` → `rgba(12,10,9,0.85)`) ou sólido
-- **SOLO** — split: foto à esquerda 50% + texto à direita 50%
-- **DUO** — texto em cima + 2 fotos lado a lado embaixo
-- **NÚMERO** — numeral gigante (200-320px, weight 800, cor de destaque) + título + apoio
-- **CITAÇÃO** — aspas grandes em marca d'água + frase + atribuição
-- **CTA FINAL** — fundo na cor de destaque, logo centralizado, headline curta, contato
-
-**Ritmo:** alternar fundo escuro ↔ claro ↔ destaque. Nunca dois slides seguidos com
-o mesmo fundo.
-
-### Sequência de capa no feed
-
-Antes de definir a capa, olhar a **última publicada** em `conteudo/publicados/`:
-
-claro → foto/escuro → cor da marca → claro
-
-Nunca duas capas iguais em sequência. Se não souber qual foi a última, perguntar.
-
----
+1. **Máximo 60 palavras por slide** (o gerador avisa), uma frase em negrito por slide,
+   seta ou pergunta no fim dos internos
+2. **Fonte em cartão** pra todo dado, com data. Dado sem fonte não entra: vira
+   "(validar antes de publicar)" na ficha e na legenda
+3. **Fecho com gente da empresa** e CTA que continua a narrativa. Nunca "fale com um
+   especialista", nunca foto de banco de imagem
+4. **Foto real** da empresa ou do acervo. Imagem gerada por IA só pra fundo, objeto,
+   cena sem pessoa, ou retrato tratado de figura pública a partir da foto oficial.
+   **Nunca rosto inventado de gente da empresa**
+5. **Nada das palavras proibidas** do guia de marca. Nada de medo, urgência falsa,
+   contagem regressiva
+6. **Preço, caso de cliente e depoimento** só com autorização escrita
+7. Sequência de capas no feed: alternar foto → texto/comparativo → foto. Se não souber
+   qual foi a última, perguntar
 
 ## Workflow
 
-### Passo 1 — Planejar
+### 1. A pauta
 
-1. Ler `marca/guia-de-marca.md` e `_memoria/empresa.md`
-2. Identificar o tipo
-3. Definir tema e ângulo. Se o tema veio do `/radar` e ainda não passou pelo
-   `/angulos`, oferecer rodar — o primeiro ângulo que vem à cabeça é o mais óbvio
+- Pauta com ficha (radar, ideias, ângulos): usar tese, gancho, prova e "evitar" como
+  briefing. Se a ficha marca pesquisa pendente, dizer antes de escrever
+- Pauta solta: passar pelo filtro da arquitetura editorial — qual tensão organiza?
+  que decisão do leitor melhora? o CTA continua a narrativa?
+- Escolher a **família** e o esqueleto em `identidade/carrossel.md` (notícia que vira
+  decisão · case · comparativo · framework · documento público)
+- Conferir no placar se carrossel é o formato certo pra essa pauta. Se reel entrega o
+  dobro na conta e a pauta não precisa ser vista lado a lado, dizer
 
-### Passo 2 — Texto
+### 2. O texto (checkpoint)
 
-**Carrossel (5-10 slides):**
-- Capa: máximo 8 palavras. **Oferecer 3 opções de título**
-- Slides internos: uma ideia por slide, frase natural, sem bullet seco
-- Slide final: CTA + logo
+Escrever slide a slide, já no formato da ficha (layout + campos). Mostrar ao usuário
+**antes de renderizar**: duas opções de título de capa, o corpo de cada slide, o
+fecho. Esperar o ok. Nenhuma imagem é gerada antes desse ok.
 
-**Post único:** frase principal + contexto curto + CTA sutil.
+### 3. As imagens
 
-**CHECKPOINT: mostrar o texto completo e esperar aprovação antes do visual.**
-Renderizar PNG de texto não aprovado é retrabalho garantido.
+- **Fotos reais:** pedir ao usuário as que faltam e dizer quais (capa, fecho, seção).
+  Salvar em `fotos/` dentro da pasta da peça
+- **Documento público** (plano, lei, norma): recortar as páginas do PDF com a
+  proposta grifada, sem cabeçalho e rodapé de campanha ou de partido
+- **Print de matéria:** um por dado, com veículo e data
+- **IA (conector Higgsfield, quando conectado no claude.ai):** mostrar o custo em
+  créditos antes de gerar e esperar o ok. Retrato de figura pública pode ser barrado
+  pelo filtro; a versão monocromática costuma passar
+- **Figura sem fundo** atravessando dois slides: `recorte` em dois slides seguidos
 
-### Passo 3 — Fotos (se for o tipo 2)
+### 4. A ficha e o render
 
-**Foto real da empresa primeiro.** Sempre. Pedir pro cliente mandar antes de
-cogitar gerar.
-
-Se não houver e o operador quiser gerar por IA:
-
-```bash
-node scripts/gerar-imagem.js "PROMPT EM INGLES" conteudo/fila/<pasta>/foto-capa.png
+```powershell
+py scripts\carrossel\gerar.py conteudo\fila\<AAAA-MM-DD>-<slug>\ficha.yaml --render
 ```
 
-Precisa de `OPENAI_API_KEY` no `.env` da raiz (copiar de `.env.exemplo`). Custa
-por imagem — avisar o operador antes de gerar em série.
+Conferir os avisos (palavras por slide, foto não encontrada, logo ausente,
+contraste). Mostrar a `_previa.png`. Ajustar a **ficha**, nunca o HTML, e renderizar
+de novo.
 
-Prompt em inglês, no padrão:
+### 5. A legenda
 
-```
-Professional [tipo] photography of [assunto], [detalhes], [ambiente],
-[luz] lighting, shallow depth of field, shot from [ângulo],
-editorial quality
-```
+Em `legenda.md` na mesma pasta, no padrão do `marca/guia-de-marca.md`. Estrutura que
+funciona quando o guia não define outra: frase forte de abertura → parágrafos curtos,
+um passo por parágrafo → a virada quando há fato → o que importa pro leitor agora →
+a frase da tese → pergunta ao leitor. O mesmo texto serve Instagram e Facebook;
+LinkedIn ganha versão própria pelo `/angulos`.
 
-Mostrar a imagem antes de usar. E **nunca gerar rosto identificável de pessoa** —
-imagem de IA fingindo equipe, cliente ou resultado é o tipo de coisa que destrói
-confiança quando alguém percebe. Serve pra fundo, textura e cena genérica.
+Abaixo de uma linha `---`, a lista **"Antes de publicar"** (não vai pro ar):
 
-### Passo 4 — HTML + PNG
+- [ ] Fonte de cada slide, com veículo, data e a frase exata do documento
+- [ ] Quais imagens são geradas por IA e de que foto partiram
+- [ ] **Tema de eleição:** perfil de empresa não impulsiona (Lei 9.504, art. 57-C).
+      Descrever a proposta, sem adjetivo, sem pedido de voto, mesmo tratamento pra
+      todos os candidatos
+- [ ] Resposta padrão pros comentários, quando o tema for sensível
+- [ ] `/revisar`
 
-1. Criar **um único `carrossel.html`** com todos os slides como `<div class="slide">`.
-   CSS inline, Google Fonts como única dependência externa. Aplicar cores e
-   tipografia da marca, no mínimo 2 layouts diferentes, logo + contador em todos os
-   slides.
+### 6. Antes de publicar
 
-   Foto no slide:
-   ```html
-   <div class="slide" style="
-     background-image: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.7)), url('foto.png');
-     background-size: cover; background-position: center;">
-     <div class="content"><h2>Texto sobre a foto</h2></div>
-   </div>
-   ```
+`/revisar` obrigatório. Peça que inaugura uma série nova: registrar o nome da série
+e o esqueleto usado em `identidade/carrossel.md`.
 
-2. Renderizar com o script do projeto. **Não criar `render.js` dentro da pasta
-   da peça** — o script é um só, e quando o layout mudar vale pras próximas:
-
-   ```bash
-   npm run carrossel -- conteudo/fila/<AAAA-MM-DD>-<slug>
-   ```
-
-   Formato vertical de story: `-- --formato 9:16`
-
-   Se der erro de módulo não encontrado, o setup ainda não foi feito. Rodar uma
-   vez no projeto:
-
-   ```bash
-   npm run setup
-   ```
-
-3. Mostrar slide 1, 2 e o CTA final renderizados. Aprovados, mostrar o resto.
-
-### Passo 5 — Salvar
+## Estrutura de saída
 
 ```
 conteudo/fila/<AAAA-MM-DD>-<slug>/
-  texto.md              ← texto aprovado
-  carrossel.html
-  instagram/            ← slide-01.png ... slide-NN.png
+  ficha.yaml        ← a peça (é isto que se edita)
+  fotos/            ← fotos reais, prints, recortes
+  carrossel.html    ← gerado
+  modelo.css, logo, fotos   ← copiados pelo gerador
+  instagram/slide-01.png … slide-NN.png
+  _previa.png       ← folha de contato
   legenda.md
-  legenda-linkedin.md   ← se pedido
-  foto-*.png            ← se houver
-  revisao.md            ← do /revisar
 ```
 
-Atualizar o status da linha em `conteudo/calendario.md` pra `escrito`.
+## Post único
 
-### Passo 6 — Legenda (automática)
+Ficha com um slide só (`capa` com `estilo: noticia`, `numero` ou `prova`). O gerador
+tira o contador sozinho.
 
-Ao terminar de renderizar, **gerar a legenda sem esperar pedido** e salvar em
-`legenda.md`:
+## Exemplo
 
-1. Hook na primeira linha
-2. Contexto (1-2 frases)
-3. CTA pro carrossel ("Arraste pro lado")
-4. Bloco da empresa (o que ela faz, contato)
-5. Hashtags (10-15 — público + nicho + cidade quando for negócio local)
-
-Respeitar o guia de marca. Se ele diz "sem emoji", a legenda sai sem emoji, mesmo
-que o formato "peça".
-
-### Passo 7 — Revisar
-
-Antes de entregar, rodar `/revisar`. Peça visual entra no mesmo controle de
-qualidade que texto.
-
-Depois: `/aprovar-post` publica.
-
----
-
-## Regras
-
-- Ler `marca/guia-de-marca.md` antes de qualquer visual. Sempre
-- Carrossel: 1080x1350 (4:5). Reels/TikTok: 1080x1920 (9:16), só quando pedido
-- Sempre checar a sequência de capa do feed antes de definir capa nova
-- Sempre gerar `legenda.md` automaticamente no fim
-- Um único `carrossel.html` com todos os slides, CSS inline. A renderização é
-  pelo `npm run carrossel` — não duplicar script dentro da pasta da peça
-- Não repetir layout entre slides
-- Não renderizar PNG antes do texto aprovado
-- **Não escrever número no slide sem a fonte no `texto.md`.** O slide não cabe a
-  fonte, mas quem revisa precisa conferir
+`conteudo/exemplos/carrossel-exemplo/ficha.yaml` — empresa fictícia, seis slides,
+família "notícia que vira decisão". Serve pra testar a instalação: se esse render sai,
+o sistema está pronto.

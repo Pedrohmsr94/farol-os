@@ -6,11 +6,15 @@ Marketing de empresa não quebra por falta de ideia. Quebra porque
 ninguém sabe o que foi feito mês passado, ninguém definiu como a marca fala, e
 o relatório é um print de alcance mandado no WhatsApp.
 
-O Farol OS resolve isso: um repositório por cliente, com a memória da empresa,
-a voz da marca, o calendário, a fila de conteúdo e o relatório — tudo em texto,
-versionado, e lido pelo Claude antes de cada resposta.
+O Farol OS resolve isso: um repositório por empresa, com a memória da empresa,
+a voz e o visual da marca, a pesquisa, o calendário, a fila de conteúdo e o
+relatório — tudo em texto, versionado, e lido pelo Claude antes de cada resposta.
 
-Um repo, uma empresa. Você clona de novo pro próximo cliente.
+Foi feito pra quem lidera o marketing de uma empresa e precisa que a operação
+inteira caiba numa pessoa: pauta, texto, carrossel pronto e histórico, sem
+depender de designer de feed nem de gestor de projetos.
+
+Um repo, uma empresa. Você clona de novo pra próxima.
 
 ---
 
@@ -42,7 +46,7 @@ Depois de instalar, apague o histórico do repositório de origem pra esse
 cliente começar com git limpo:
 
 ```
-rm -rf .git && git init && git add -A && git commit -m "Farol OS instalado"
+Remove-Item -Recurse -Force .git; git init; git add -A; git commit -m "Farol OS instalado"
 ```
 
 ---
@@ -53,6 +57,8 @@ Nenhuma peça pula uma etapa. **Todo conteúdo nasce de pesquisa, nunca de opini
 solta** — e o controle de qualidade reprova peça que não tem raiz pesquisada.
 
 ```
+/arquitetura-editorial  (o que a marca defende, tensões, linhas, funil)
+                                 ↓
 /radar   (o que mudou lá fora)  ⟍
                                  ⟩→ /angulos → /calendario → produção
 /ideias  (o banco perene)       ⟋                                 ↓
@@ -70,7 +76,10 @@ solta** — e o controle de qualidade reprova peça que não tem raiz pesquisada
 onde o marketing está furado hoje — canais, funil, quem faz o quê, o que é
 medido — e vira o documento da primeira reunião · `/marca` extrai voz, público e
 território de palavras, e gera o guia que todas as outras skills leem antes de
-escrever.
+escrever · `/arquitetura-editorial` decide o que a marca defende: Big Idea, as
+tensões do público, as linhas com a fatia de cada uma no mês, o balanço de funil
+e o que ela nunca faz. É a lente que `/radar`, `/ideias`, `/angulos` e `/revisar`
+leem.
 
 **Pesquisa**
 
@@ -79,9 +88,11 @@ nicho, e entrega 5 a 8 pautas fichadas com fato, fonte, ângulo e formato. Na
 primeira rodada ele monta o mapa de fontes daquele setor — o resto é automático,
 e dá pra agendar · `/ideias` gera o conteúdo que não depende de notícia: pergunta
 que chega toda semana no WhatsApp, objeção de quem não fechou, bastidor, prova,
-mito do setor, o que o dono repete em toda reunião. Doze fontes de ideia, mais as
-linhas editoriais e a fatia de cada uma no mês · `/investigar` levanta a voz real
-do dono, analisa os perfis de referência do nicho e coleta comentário do público ·
+mito do setor, o que o dono repete em toda reunião. Treze fontes de ideia, cada
+uma amarrada a uma tensão da arquitetura editorial · `/investigar` tem quatro
+modos: a voz real do dono, os perfis de referência do nicho (com os coletores),
+o comentário do público e o reel que estourou, baixado e transcrito pra ler o
+gancho · `/transcrever` vira reunião e áudio em texto, no próprio computador ·
 `/seo` roda os 7 passos de SEO e GEO, do levantamento de demanda a aparecer nas
 respostas do ChatGPT.
 
@@ -90,14 +101,17 @@ respostas do ChatGPT.
 `/angulos` pega um tema e devolve 5 ângulos narrativos diferentes, depois mostra
 como o escolhido vira carrossel, reel, LinkedIn ou artigo — é o que faz uma
 pesquisa render quatro semanas de conteúdo em vez de um post · `/calendario`
-monta a pauta do mês a partir dos ângulos, da estratégia e do que já rendeu ·
-`/post` escreve a peça de texto · `/carrossel` gera os slides 1080×1350 na
-identidade da marca, com legenda · `/publicar-tema` faz o pacote completo:
+monta a pauta do mês distribuída no funil, a partir da arquitetura, dos ângulos e
+do placar da conta · `/post` escreve a peça de texto · `/carrossel` transforma uma
+ficha de texto em slides 1080×1350 na identidade da marca, com legenda — o visual
+mora em `identidade/`, então empresa nova é trocar cores, fontes e logo num
+arquivo · `/publicar-tema` faz o pacote completo:
 artigo, carrossel e as três legendas, amarrados.
 
 **Qualidade e publicação**
 
-`/revisar` julga a peça contra critério escrito e devolve veredito — aprovado,
+`/revisar` julga a peça contra critério escrito e contra o placar real da conta,
+e devolve veredito — aprovado,
 aprovado com ajustes ou reprovado, com o trecho problemático citado. Roda em
 subagente pra ter olhos frescos · `/aprovar-post` publica e registra.
 
@@ -120,7 +134,7 @@ para o dia a dia.
 caso real e registra no sistema · `/mapear-rotinas` faz o caminho inverso:
 entrevista o que você repete toda semana e propõe o que vale automatizar.
 
-As 25 skills cobrem o que é comum a qualquer operação de marketing. O que é do
+As 27 skills cobrem o que é comum a qualquer operação de marketing. O que é do
 seu jeito de trabalhar, você constrói — e escolhe se vale só naquele cliente ou
 em todos.
 
@@ -152,8 +166,12 @@ definida, e não maquia queda em adjetivo.
 - Git
 - VS Code (opcional, mas é onde fica confortável)
 - [Obsidian](https://obsidian.md) (opcional — abre a pasta como cofre e vira grafo)
-- Node + Playwright — só pro `/carrossel`. Instala com `npm run setup` dentro da pasta do cliente
-- Python + `yt-dlp` — só pra coleta de comentários (`pip install yt-dlp`)
+- Node + Playwright — `/carrossel` e coletores. Instala com `npm run setup` dentro da pasta
+- Python 3.12 — gerador de carrossel, coletores, reel e transcrição. Instala com `npm run setup:python`
+  (`py -m pip install -r requirements.txt`)
+- FFmpeg — quadros de vídeo e transcrição (`winget install Gyan.FFmpeg`)
+- Chaves opcionais no `.env` (modelo em `.env.exemplo`): `APIFY_TOKEN` (coleta, paga por rodada),
+  `META_ACCESS_TOKEN` e `META_IG_ACCOUNT_ID` (placar da conta)
 
 ---
 

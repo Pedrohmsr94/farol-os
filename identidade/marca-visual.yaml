@@ -1,0 +1,59 @@
+# A marca em números: o que o gerador de carrossel (scripts/carrossel/gerar.py) lê.
+# Cliente novo = editar este arquivo e pôr o logo em identidade/logo.png. Nenhum código muda.
+# O porquê de cada escolha (o que a cor significa, o que é proibido) mora em
+# identidade/design-guide.md. Aqui fica só o valor.
+#
+# Enquanto estiver com os valores abaixo, o carrossel sai no visual neutro do Farol OS:
+# serve pra testar, não pra publicar.
+
+nome: "Sua Empresa"          # vai no alt do logo e, se não houver logo, no lugar dele em texto
+handle: "@suaempresa"        # o @ no pé dos slides (ficha com `limpo: true` esconde)
+serie: ""                    # olho padrão do cabeçalho; a ficha pode trocar por peça (ex.: "Bastidor")
+
+# Logo: PNG com fundo transparente e recortado rente (sem margem vazia em volta).
+# Sem arquivo, o gerador avisa e escreve o `nome` em texto no lugar.
+logo: identidade/logo.png
+logo_largura: 150            # px no topo do slide
+# Em fundo escuro (capa com foto, slide escuro, fecho):
+#   branco   = o próprio logo vira branco chapado por filtro (bom pra logo de uma cor)
+#   original = usa o logo como está (só serve se ele já funciona em fundo escuro)
+# Se a marca tem a versão negativa oficial, apontar em `logo_escuro` e ela tem prioridade.
+logo_no_escuro: branco
+logo_escuro: ""              # ex.: identidade/logo-negativo.png
+
+cores:
+  escuro: "#16202E"          # campo escuro: capa, fecho, slides escuros. Texto branco por cima
+  claro: "#F5F3EE"           # campo claro: slides claros. Off-white lê melhor que branco puro
+  destaque: "#C2410C"        # a cor de acento: filete, selo numerado, número grande, botão. Uma só
+  texto: "#3B3F45"           # corpo de texto sobre o claro
+  titulo: ""                 # título sobre o claro (vazio = usa a cor `escuro`)
+  destaque_texto: ""         # destaque quando vira LETRA sobre o claro (vazio = o gerador escurece
+                             # o `destaque` até passar 4,5:1 de contraste)
+  sobre_destaque: ""         # letra em cima do destaque (selo, botão). Vazio = branco ou escuro,
+                             # o que der mais contraste
+
+fontes:
+  corpo:
+    familia: "Inter"         # nome exato no Google Fonts (fonts.google.com)
+    pesos: "300;400;600;700;800"   # só pesos que a fonte tem; se faltar um, o render avisa que não carregou
+    reserva: "'Segoe UI', system-ui, sans-serif"
+    # google: false          # fonte instalada na máquina, sem baixar do Google
+  titulo:
+    familia: ""              # vazio = a mesma do corpo. Ex.: "Fraunces" pra título com serifa
+    pesos: ""
+    reserva: ""
+
+peso_titulo: 300             # o título é leve e a oração que carrega a tensão vai em **negrito** (700).
+                             # Marca que pede título pesado: 700 ou 800
+cantos: 3                    # raio dos cartões e selos, em px. 0 = quadrado; 12 = arredondado
+
+# Motivos decorativos. Ligar só o que a marca tem de verdade.
+motivos:
+  halftone: true             # malha de pontos no canto do campo escuro
+  curva: false               # fio na cor de destaque atravessando capa, seção e fecho
+
+seta: "arraste"              # texto do botão no pé dos slides internos
+
+# Método da empresa em selos no fecho (opcional). Ex.: ["Diagnosticar", "Organizar", "Medir"]
+# Vazio = o fecho sai sem os selos. A ficha pode desligar por peça com `metodo: false`.
+metodo: []

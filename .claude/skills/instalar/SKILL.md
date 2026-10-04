@@ -138,6 +138,7 @@ Mostrar:
 ○ Guia de marca    em branco — roda /marca
 ○ Diagnóstico      não feito — roda /diagnostico
 ○ Fontes do nicho  não montadas — a 1ª rodada do /radar monta
+○ Arquitetura      em branco — roda /arquitetura-editorial depois do /marca
 ```
 
 **Se a pasta tem nome genérico**, gerar slug da empresa (minúscula, sem acento,
@@ -149,7 +150,7 @@ espaço vira hífen) e instruir:
 **Se o git ainda tem histórico do modelo:**
 
 > "O repo ainda carrega o histórico do Farol OS. Pra esse cliente começar
-> limpo: `rm -rf .git && git init && git add -A && git commit -m 'Farol OS instalado'`.
+> limpo: `Remove-Item -Recurse -Force .git; git init; git add -A; git commit -m 'Farol OS instalado'` (PowerShell).
 > Quer que eu rode?"
 
 Terminar:
@@ -161,6 +162,8 @@ Terminar:
 > 2. `/marca` — pra nenhum texto sair genérico
 > 3. `/radar` — a primeira rodada monta o mapa de fontes do nicho. É a rodada
 >    mais importante do contrato, e depois dela a pesquisa fica automática
+> 4. `/arquitetura-editorial` — decide o que a marca defende e as linhas do
+>    mês. Antes dela, `/ideias` e `/calendario` trabalham no provisório
 >
 > No dia a dia: `/abrir` no começo, `/fechar` no fim."
 

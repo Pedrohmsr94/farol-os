@@ -1,0 +1,58 @@
+# Exemplo de ficha do /carrossel. Empresa, números e fonte são FICTÍCIOS: servem pra ver
+# os layouts funcionando, não pra publicar.
+#
+#   py scripts/carrossel/gerar.py conteudo/exemplos/carrossel-exemplo/ficha.yaml --render
+#
+# Família: notícia que vira decisão (ver identidade/carrossel.md). Sem foto de propósito:
+# numa peça de verdade, a capa e o fecho levam foto real da empresa (`foto: capa.jpg` com o
+# arquivo na mesma pasta da ficha). Sem foto, a capa sai no campo escuro e o fecho só com texto.
+slug: freio-sinais
+serie: "Oficina Aberta"
+edicao: "nº 01 · out 2026"
+
+slides:
+  - layout: capa
+    selo: "Manutenção"
+    titulo: "O freio avisa antes de falhar. **Quase ninguém escuta.**"
+    sub: "Três sinais que aparecem semanas antes da pastilha acabar, e quanto custa ignorar cada um."
+    seta: "veja os sinais"
+
+  - layout: numero
+    numero: "62<small>%</small>"
+    rotulo: "dos carros que chegaram aqui com o disco riscado **já tinham dado sinal** no mês anterior."
+    fonte: "registro de entrada da oficina, jan–set 2026 (exemplo fictício)"
+
+  - layout: cartoes
+    titulo: "Os três sinais, **em ordem de urgência:**"
+    itens:
+      - {t: "Chiado ao frear", d: "A pastilha chegou no indicador de desgaste. Ainda dá tempo."}
+      - {t: "Pedal mais fundo", d: "Pode ser fluido velho ou vazamento. Não espere a próxima revisão."}
+      - {t: "Volante tremendo", d: "O disco já empenou. Aqui a conta dobra."}
+    corpo:
+      - {texto: "O primeiro custa uma pastilha. O terceiro, **pastilha e disco.**", seta: true}
+
+  - layout: dois-lados
+    titulo: "A mesma peça, **duas contas:**"
+    cab: {a: "Esperou o barulho piorar", b: "Trocou no primeiro chiado", ico_a: x, ico_b: check}
+    linhas:
+      - {k: "Peças", a: "Pastilha e par de discos.", b: "Só a pastilha."}
+      - {k: "Tempo parado", a: "Um dia inteiro.", b: "Uma hora e meia."}
+    corpo:
+      - {texto: "A diferença é **quando você escuta.**", seta: true}
+
+  - layout: prova
+    titulo: "O que diz o manual"
+    cartao:
+      k: "Fonte"
+      t: "Revisar o sistema de freio **a cada 10 mil km** ou ao primeiro ruído, o que vier antes."
+      fonte: "manual do proprietário, seção de manutenção (exemplo fictício)"
+    corpo:
+      - "Se o seu carro passou disso sem revisão, **vale olhar antes do próximo feriado.**"
+
+  - layout: fecho
+    titulo: "Aqui, o freio é **olhado antes do orçamento.**"
+    corpo:
+      - "A gente mostra a pastilha na sua mão e diz quanto ainda dura. Se não precisar trocar, você vai embora sem pagar nada."
+    nome: "Equipe da Oficina"
+    cargo: "Revisão de freio sem hora marcada"
+    cta: "Agende a revisão"

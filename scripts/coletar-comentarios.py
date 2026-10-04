@@ -4,14 +4,14 @@ do publico — a materia-prima que o /radar nao consegue capturar sozinho.
 
 Usado pela skill /investigar (modo comentarios).
 
-    python scripts/coletar-comentarios.py --busca "nao consigo pagar meu contador"
-    python scripts/coletar-comentarios.py --url https://youtube.com/watch?v=XXXX
-    python scripts/coletar-comentarios.py --busca "abri empresa e me arrependi" --min-chars 60
+    py scripts/coletar-comentarios.py --busca "nao consigo pagar meu contador"
+    py scripts/coletar-comentarios.py --url https://youtube.com/watch?v=XXXX
+    py scripts/coletar-comentarios.py --busca "abri empresa e me arrependi" --min-chars 60
 
 Saida: pesquisa/investigacoes/comentarios/<slug>-<AAAA-MM-DD>.md
 
 Nao transcreve nem baixa video: so metadados e comentarios. Requer yt-dlp
-(pip install yt-dlp).
+(py -m pip install yt-dlp). Varias buscas na mesma chamada nao duplicam video.
 
 O vocabulario concreto do nicho vem de pesquisa/vocabulario.md, ou de --concreto.
 Sem nenhum dos dois o script roda, mas a ordenacao fica pior.
@@ -29,6 +29,7 @@ from pathlib import Path
 
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
+    sys.stderr.reconfigure(encoding="utf-8")
 
 # Ruido tipico de secao de comentarios: elogio curto, saudacao, agradecimento.
 # Nao carregam linguagem util e poluem o corpus. Vale pra qualquer nicho.
@@ -127,6 +128,26 @@ def rodar_ytdlp(alvo: str, destino: Path, max_comentarios: int) -> list[Path]:
     return sorted(destino.glob("*.info.json"))
 
 
+def coletar(alvos: list[str], destino: Path, max_comentarios: int) -> list[Path]:
+    """Roda cada busca e devolve os .info.json de cada video UMA vez so.
+
+    Buscas diferentes trazem videos repetidos, e o glob da pasta compartilhada
+    devolve tudo que ja estava la — sem deduplicar, o corpus contava o mesmo
+    video (e os mesmos comentarios) uma vez por busca subsequente. Deduplicar
+    pelo caminho resolve, e o relatorio passa a dizer quantos videos distintos
+    entraram de verdade.
+    """
+    vistos: set[Path] = set()
+    novos: list[Path] = []
+    for alvo in alvos:
+        print(f"buscando: {alvo}")
+        for arq in rodar_ytdlp(alvo, destino, max_comentarios):
+            if arq not in vistos:
+                vistos.add(arq)
+                novos.append(arq)
+    return novos
+
+
 def util(texto: str, min_chars: int) -> bool:
     t = texto.strip()
     return len(t) >= min_chars and not RUIDO.match(t)
@@ -164,14 +185,11 @@ def main() -> int:
 
     with tempfile.TemporaryDirectory() as tmp:
         destino = Path(tmp)
-        arquivos: list[Path] = []
-        for alvo in alvos:
-            print(f"buscando: {alvo}")
-            arquivos.extend(rodar_ytdlp(alvo, destino, args.comentarios))
+        arquivos = coletar(alvos, destino, args.comentarios)
 
         if not arquivos:
             print("Nada retornou. Verifique o termo, a conexao, ou rode "
-                  "'python -m pip install --upgrade yt-dlp'.")
+                  "'py -m pip install --upgrade yt-dlp'.")
             return 1
 
         videos = []

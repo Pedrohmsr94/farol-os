@@ -1,0 +1,443 @@
+/* Modelo de carrossel do Farol OS · "editorial" (v2)
+   O desenho é este arquivo; a marca vem de identidade/marca-visual.yaml. O gerador
+   (scripts/carrossel/gerar.py) lê o YAML e injeta as variáveis abaixo no <head> do HTML,
+   então cliente novo = editar o YAML e trocar o logo. Não editar cor aqui.
+   Vocabulário de layouts e regras de texto: identidade/carrossel.md. */
+
+:root{
+  /* valores-padrão (visual neutro). O gerador sobrescreve com os da marca. */
+  --escuro:#16202E; --escuro-2:#111924; --escuro-rgb:22,32,46;
+  --claro:#F5F3EE; --claro-rgb:245,243,238;
+  --destaque:#C2410C; --destaque-txt:#C2410C; --sobre-destaque:#fff;
+  --texto:#3B3F45; --texto-rgb:59,63,69;
+  --titulo:#16202E;
+  --fonte:'Inter','Segoe UI',system-ui,sans-serif; --fonte-titulo:var(--fonte);
+  --peso-titulo:300; --raio:3px;
+  --fio:rgba(var(--escuro-rgb),.20); --fio-soft:rgba(var(--escuro-rgb),.09); --fio-esc:rgba(255,255,255,.22); --fio-esc-soft:rgba(255,255,255,.10);
+  --pad:96px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#171a22;font-family:var(--fonte);font-variant-numeric:tabular-nums;
+  display:flex;flex-direction:column;align-items:center;gap:26px;padding:26px}
+.slide{width:1080px;height:1350px;position:relative;overflow:hidden;background:var(--claro);color:var(--texto)}
+.slide.escuro{background:var(--escuro);color:rgba(255,255,255,.82)}
+.slide.claro{background:var(--claro)}
+.slide.branco{background:#fff}
+b,strong{font-weight:700}
+h1,h2,.numero,.rotulo,.aspas,.cena-txt .t,.comp .txt .t,.dupla .rot .t,.nota .veredito,.extrato .veredito{font-family:var(--fonte-titulo)}
+
+/* ---------- motivos decorativos (ligados no YAML: motivos.halftone, motivos.curva) ---------- */
+/* halftone: malha de pontos no canto do campo escuro */
+.halftone{position:absolute;right:-140px;bottom:-140px;width:560px;height:560px;pointer-events:none;
+  background:radial-gradient(circle,rgba(255,255,255,.34) 1.6px,transparent 2px) 0 0/11px 11px;
+  -webkit-mask-image:radial-gradient(circle at 72% 72%,#000 0,transparent 60%);mask-image:radial-gradient(circle at 72% 72%,#000 0,transparent 60%)}
+.claro .halftone,.branco .halftone{background:radial-gradient(circle,rgba(var(--escuro-rgb),.22) 1.6px,transparent 2px) 0 0/11px 11px}
+/* curva: fio na cor de destaque atravessando o slide (svg desenhado pelo gerador) */
+.curva{position:absolute;left:0;width:1080px;height:220px;pointer-events:none}
+.curva path{fill:none;stroke:var(--destaque);stroke-width:3}
+
+/* ---------- cabeça e pé ---------- */
+.cab{position:absolute;left:var(--pad);right:var(--pad);top:74px;display:flex;justify-content:space-between;align-items:center;z-index:5}
+.cab .logo{width:var(--logo-largura,150px);height:auto;max-height:72px;object-fit:contain;object-position:left center;display:block}
+.cab .logo-esc{display:none}
+.cab .logo-txt{font-family:var(--fonte-titulo);font-size:26px;font-weight:800;letter-spacing:-.01em;color:var(--titulo)}
+/* contextos escuros: capa com foto, slide escuro, metade e mosaico (a cabeça cai sobre a foto) */
+.escuro .cab .logo-txt,.foto .cab .logo-txt,.metade .cab .logo-txt,.mosaico .cab .logo-txt{color:#fff}
+body.logo-filtro .escuro .cab .logo,body.logo-filtro .foto .cab .logo,body.logo-filtro .metade .cab .logo,body.logo-filtro .mosaico .cab .logo{filter:brightness(0) invert(1)}
+.escuro .cab .logo-pos,.foto .cab .logo-pos,.metade .cab .logo-pos,.mosaico .cab .logo-pos{display:none}
+.escuro .cab .logo-esc,.foto .cab .logo-esc,.metade .cab .logo-esc,.mosaico .cab .logo-esc{display:block}
+.cab .olho{font-size:14px;font-weight:800;letter-spacing:.30em;text-transform:uppercase;color:var(--destaque-txt);text-align:right;line-height:1.5}
+.escuro .cab .olho,.foto .cab .olho{color:#fff;opacity:.85}
+.cab .olho .n{display:block;font-weight:600;letter-spacing:.22em;opacity:.7}
+.pe{position:absolute;left:var(--pad);right:var(--pad);bottom:72px;display:flex;justify-content:space-between;align-items:center;z-index:5;
+  font-size:14px;font-weight:700;letter-spacing:.26em;text-transform:uppercase;color:rgba(var(--texto-rgb),.65)}
+.escuro .pe,.foto .pe{color:rgba(255,255,255,.62)}
+.pe .seta{display:inline-flex;align-items:center;gap:12px;padding:12px 22px;border:1.5px solid currentColor;border-radius:var(--raio);font-size:13px}
+.pe .seta::after{content:'→';font-size:18px;letter-spacing:0}
+
+/* ---------- miolo ---------- */
+main{position:absolute;left:var(--pad);right:var(--pad);top:210px;bottom:170px;z-index:3;display:flex;flex-direction:column;justify-content:center}
+main.topo{justify-content:flex-start}
+.olho-secao{font-size:15px;font-weight:800;letter-spacing:.30em;text-transform:uppercase;color:var(--destaque-txt);margin-bottom:26px;display:flex;align-items:center;gap:16px}
+.olho-secao::after{content:'';width:70px;height:1.5px;background:currentColor;opacity:.5}
+.selo-capa{display:inline-block;align-self:flex-start;width:max-content;background:var(--destaque);color:var(--sobre-destaque);font-size:14px;font-weight:800;letter-spacing:.26em;text-transform:uppercase;padding:11px 18px 10px;margin-bottom:28px;border-radius:var(--raio)}
+.escuro .olho-secao{color:#fff;opacity:.9}
+h1{font-size:82px;font-weight:var(--peso-titulo);line-height:1.04;letter-spacing:-.025em;color:var(--titulo)}
+h2{font-size:56px;font-weight:var(--peso-titulo);line-height:1.10;letter-spacing:-.02em;color:var(--titulo);margin-bottom:34px}
+h1 b,h2 b{font-weight:700}
+.escuro h1,.escuro h2,.foto h1,.foto h2{color:#fff}
+.dest{color:var(--destaque-txt)}
+.escuro .dest,.foto .dest{color:#fff;text-decoration:underline;text-decoration-color:var(--destaque);text-decoration-thickness:5px;text-underline-offset:10px;text-decoration-skip-ink:none}
+p.corpo{font-size:30px;font-weight:400;line-height:1.45;max-width:820px;margin-bottom:26px}
+p.corpo b{color:var(--titulo)}
+.escuro p.corpo b{color:#fff}
+p.corpo.destaque{font-weight:700;color:var(--titulo);font-size:32px}
+.escuro p.corpo.destaque{color:#fff}
+p.corpo.seta::after{content:' →';color:var(--destaque-txt);font-weight:700}
+.escuro p.corpo.seta::after{color:#fff}
+.sub{font-size:28px;font-weight:var(--peso-titulo);line-height:1.4;max-width:820px}
+
+/* ---------- capa (foto sangrando + degradê da cor escura) ---------- */
+.slide.foto{background:var(--escuro)}
+.slide.foto .bg{position:absolute;inset:0;background-size:cover;background-position:center}
+.slide.foto .bg::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(var(--escuro-rgb),.08) 0%,rgba(var(--escuro-rgb),.16) 30%,rgba(var(--escuro-rgb),.40) 50%,rgba(var(--escuro-rgb),.72) 64%,rgba(var(--escuro-rgb),.92) 78%,var(--escuro) 100%)}
+/* `topo: true`: tinge o terço de cima pra engolir parede, teto ou céu estourado */
+.slide.foto.topo .bg::before{content:'';position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(var(--escuro-rgb),.94) 0%,rgba(var(--escuro-rgb),.72) 10%,rgba(var(--escuro-rgb),.32) 17%,rgba(var(--escuro-rgb),.08) 23%,rgba(var(--escuro-rgb),0) 28%)}
+.slide.foto main{top:auto;bottom:190px;justify-content:flex-end}
+.slide.foto .sub{color:rgba(255,255,255,.82);margin-top:26px}
+.slide.foto h1{font-size:88px}
+.slide.foto .curva{top:auto;bottom:520px}
+/* `alinha: centro` centra selo e título; `selo_grande: true` dá mais corpo ao selo */
+.slide.foto main.centro{align-items:center;text-align:center}
+.slide.foto main.centro .selo-capa{align-self:center}
+.slide.foto main.centro .sub{margin-left:auto;margin-right:auto}
+.selo-capa.grande{font-size:21px;letter-spacing:.24em;padding:17px 30px 16px;margin-bottom:40px}
+/* `degrade: leve`: a foto respira até a metade e o escuro só fecha embaixo do título */
+.slide.foto.leve .bg::after{background:linear-gradient(180deg,rgba(var(--escuro-rgb),0) 0%,rgba(var(--escuro-rgb),0) 42%,rgba(var(--escuro-rgb),.38) 58%,rgba(var(--escuro-rgb),.82) 72%,rgba(var(--escuro-rgb),.96) 84%,var(--escuro) 100%)}
+
+/* capa dupla (comparativo) */
+.dupla{position:absolute;inset:0;display:grid;grid-template-columns:1fr 1fr}
+.dupla .lado{position:relative;background-size:cover;background-position:center;background-color:var(--escuro-2)}
+.dupla .lado::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(var(--escuro-rgb),.05) 20%,rgba(var(--escuro-rgb),.75) 48%,rgba(var(--escuro-rgb),.97) 70%)}
+.dupla .lado .rot{position:absolute;left:44px;right:44px;bottom:520px;z-index:2;color:#fff}
+.dupla .lado .rot .k{font-size:15px;font-weight:800;letter-spacing:.28em;text-transform:uppercase;opacity:.85;margin-bottom:12px}
+.dupla .lado .rot .t{font-size:52px;font-weight:var(--peso-titulo);line-height:1.05;letter-spacing:-.02em}
+.dupla .lado .rot .t b{font-weight:700}
+.dupla .vs{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:92px;height:92px;border-radius:50%;background:var(--destaque);color:var(--sobre-destaque);
+  display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:800;z-index:3;letter-spacing:.05em}
+.slide.dupla-capa main{top:auto;bottom:190px;justify-content:flex-end}
+.slide.dupla-capa h1{font-size:64px;text-align:center}
+
+/* ---------- número gigante ---------- */
+.numero{font-size:210px;font-weight:700;line-height:.95;letter-spacing:-.04em;color:var(--destaque-txt);margin:10px 0 18px}
+.escuro .numero{color:#fff}
+.numero small{font-size:90px;font-weight:var(--peso-titulo);letter-spacing:-.02em}
+.rotulo{font-size:40px;font-weight:var(--peso-titulo);line-height:1.2;color:var(--titulo);margin-bottom:30px;max-width:820px}
+.rotulo b{font-weight:700}
+.escuro .rotulo{color:#fff}
+
+/* cartão de prova / fonte */
+.prova{border:1.5px solid var(--fio);border-top:4px solid var(--destaque);background:#fff;padding:34px 40px;border-radius:var(--raio);max-width:880px;margin:10px 0 30px}
+.escuro .prova{background:rgba(255,255,255,.06);border-color:var(--fio-esc);border-top-color:var(--destaque)}
+.prova .k{font-size:13px;font-weight:800;letter-spacing:.26em;text-transform:uppercase;color:var(--destaque-txt);margin-bottom:14px}
+.escuro .prova .k{color:#fff;opacity:.8}
+.prova .t{font-size:30px;font-weight:var(--peso-titulo);line-height:1.35;color:var(--titulo);font-style:italic}
+.escuro .prova .t{color:#fff}
+.prova .t b{font-weight:700;font-style:normal}
+.fonte{font-size:15px;font-weight:600;letter-spacing:.08em;color:rgba(var(--texto-rgb),.7);margin-top:8px}
+.escuro .fonte{color:rgba(255,255,255,.55)}
+
+/* ---------- metade foto, metade número ---------- */
+.slide.metade main{top:0;bottom:0;left:0;right:0}
+.metade .foto-half{position:absolute;left:0;right:0;top:0;height:640px;background-size:cover;background-position:center;background-color:var(--escuro)}
+.metade .foto-half::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(var(--escuro-rgb),.62) 0%,rgba(var(--escuro-rgb),.30) 22%,rgba(var(--escuro-rgb),0) 55%)}
+.metade .texto-half{position:absolute;left:var(--pad);right:var(--pad);top:700px;bottom:170px;display:flex;flex-direction:column;justify-content:center}
+.metade .curva{top:510px}
+/* a cabeça da metade fica sempre sobre a foto: olho em branco, mesmo no fundo claro */
+.slide.metade .cab .olho{color:#fff;opacity:.85}
+
+/* ---------- cartões (lista numerada / checks) ---------- */
+.cartoes{display:flex;flex-direction:column;gap:18px;max-width:900px}
+.cartoes + .fonte{margin-top:22px}
+.cartao{display:flex;gap:26px;align-items:flex-start;background:#fff;border:1.5px solid var(--fio);border-radius:var(--raio);padding:26px 30px}
+.escuro .cartao{background:rgba(255,255,255,.06);border-color:var(--fio-esc)}
+.cartao .selo{flex:none;width:56px;height:56px;background:var(--destaque);color:var(--sobre-destaque);font-size:26px;font-weight:800;display:flex;align-items:center;justify-content:center;border-radius:var(--raio)}
+.cartao .selo.check::before{content:'✓'}
+.cartao .t{font-size:28px;font-weight:700;color:var(--titulo);line-height:1.25}
+.escuro .cartao .t{color:#fff}
+.cartao .d{font-size:23px;font-weight:400;line-height:1.4;margin-top:6px}
+.cartao .d b{color:var(--titulo)} .escuro .cartao .d b{color:#fff}
+
+/* ---------- seção numerada ---------- */
+.selo-secao{display:inline-flex;align-items:center;gap:22px;margin-bottom:26px}
+.selo-secao .n{width:64px;height:64px;background:var(--destaque);color:var(--sobre-destaque);font-size:30px;font-weight:800;display:flex;align-items:center;justify-content:center;border-radius:var(--raio)}
+.escuro .selo-secao .n{background:#fff;color:var(--escuro)}
+.selo-secao .t{font-size:18px;font-weight:800;letter-spacing:.28em;text-transform:uppercase;color:var(--destaque-txt)}
+.escuro .selo-secao .t{color:#fff;opacity:.85}
+.foto-cartao{width:100%;height:420px;background-size:cover;background-position:center;border-radius:var(--raio);border:1.5px solid var(--fio);margin-top:10px}
+.escuro .foto-cartao{border-color:var(--fio-esc)}
+
+/* ---------- comparativo cima/baixo ---------- */
+.slide.comp main{top:0;bottom:0;left:0;right:0}
+.comp .metade-a,.comp .metade-b{position:absolute;left:0;right:0;height:675px;background-size:cover;background-position:center}
+.comp .metade-a{top:0} .comp .metade-b{top:675px}
+.comp .metade-a::after,.comp .metade-b::after{content:'';position:absolute;inset:0}
+.comp .metade-a::after{background:rgba(var(--claro-rgb),.94)}
+.comp .metade-b::after{background:rgba(var(--escuro-rgb),.94)}
+.comp .metade-a.com-foto::after{background:linear-gradient(180deg,rgba(var(--claro-rgb),.35) 0%,rgba(var(--claro-rgb),.96) 55%)}
+.comp .metade-b.com-foto::after{background:linear-gradient(180deg,rgba(var(--escuro-rgb),.35) 0%,rgba(var(--escuro-rgb),.96) 55%)}
+.comp .txt{position:absolute;left:var(--pad);right:var(--pad);z-index:2}
+.comp .metade-a .txt{bottom:80px} .comp .metade-b .txt{bottom:150px}
+.comp .txt .k{font-size:16px;font-weight:800;letter-spacing:.28em;text-transform:uppercase;margin-bottom:16px;color:var(--destaque-txt)}
+.comp .metade-b .txt .k{color:#fff;opacity:.85}
+.comp .txt .t{font-size:44px;font-weight:var(--peso-titulo);line-height:1.15;letter-spacing:-.015em;color:var(--titulo)}
+.comp .txt .t b{font-weight:700}
+.comp .metade-b .txt .t{color:#fff}
+.comp .divisor{position:absolute;left:0;right:0;top:672px;height:3px;background:var(--destaque);z-index:3}
+
+/* ---------- diagrama de círculos conectados ---------- */
+.diagrama{position:relative;width:888px;height:700px;margin:0 auto}
+.diagrama svg{position:absolute;inset:0;width:100%;height:100%}
+.diagrama svg line{stroke:var(--destaque);stroke-width:2.5;opacity:.85}
+.escuro .diagrama svg line{stroke:#fff;opacity:.5}
+.diagrama .no{position:absolute;transform:translate(-50%,-50%);border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.diagrama .no.centro{width:250px;height:250px;background:var(--escuro);color:#fff;font-size:28px;font-weight:700;line-height:1.15;padding:26px}
+.escuro .diagrama .no.centro{background:#fff;color:var(--escuro)}
+.diagrama .no.sat{width:204px;height:204px;background:#fff;border:2.5px solid var(--destaque);color:var(--titulo);padding:18px}
+.escuro .diagrama .no.sat{background:var(--escuro-2);border-color:#fff;color:#fff}
+.diagrama .no.sat .t{font-size:24px;font-weight:700;line-height:1.1}
+.diagrama .no.sat .d{font-size:16.5px;font-weight:400;line-height:1.25;margin-top:6px;opacity:.85}
+.diagrama .no.centro small{display:block;font-size:15px;font-weight:600;line-height:1.3;margin-top:10px;opacity:.72;letter-spacing:.02em}
+.diagrama + p.corpo{margin-top:26px}
+
+/* ---------- fecho (pessoa + CTA) ---------- */
+.slide.fecho{background:var(--escuro)}
+.fecho .pessoa{position:absolute;right:0;top:0;bottom:0;width:560px;background-size:cover;background-position:center top}
+.fecho .pessoa::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,var(--escuro) 0%,rgba(var(--escuro-rgb),.55) 22%,rgba(var(--escuro-rgb),0) 55%),linear-gradient(0deg,var(--escuro) 0%,rgba(var(--escuro-rgb),0) 35%)}
+.fecho main{right:auto;width:560px}
+.fecho h2{font-size:60px;margin-bottom:30px}
+.fecho .nome{font-size:24px;font-weight:700;color:#fff;margin-top:30px}
+.fecho .cargo{font-size:19px;font-weight:400;color:rgba(255,255,255,.7);line-height:1.4;max-width:460px}
+.fecho .cta{display:inline-block;align-self:flex-start;margin-top:44px;padding:20px 32px;background:var(--destaque);color:var(--sobre-destaque);font-size:17px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;border-radius:var(--raio)}
+.fecho .metodo{display:flex;gap:10px;margin-top:40px;flex-wrap:wrap}
+.fecho .metodo span{font-size:12px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:#fff;border:1.5px solid rgba(255,255,255,.4);padding:9px 12px;border-radius:var(--raio)}
+.fecho .metodo i{color:var(--destaque);font-style:normal;align-self:center;font-weight:800}
+/* fecho sem foto: o texto ocupa a largura toda */
+.fecho.sem-foto main{width:auto;right:var(--pad)}
+/* `largo: true`: foto de grupo na largura toda no alto, texto embaixo */
+.fecho.largo .pessoa{left:0;right:0;bottom:auto;width:auto;height:760px;background-position:center 40%}
+.fecho.largo .pessoa::after{background:linear-gradient(180deg,rgba(var(--escuro-rgb),.62) 0%,rgba(var(--escuro-rgb),.18) 16%,rgba(var(--escuro-rgb),0) 30%,rgba(var(--escuro-rgb),0) 58%,rgba(var(--escuro-rgb),.75) 84%,var(--escuro) 100%)}
+.fecho.largo main{width:auto;right:var(--pad);top:720px;bottom:170px;justify-content:flex-start}
+.fecho.largo h2{font-size:50px;margin-bottom:24px}
+.fecho.largo .nome{margin-top:18px}
+.fecho.largo .cta{margin-top:30px}
+
+/* ---------- notas: dois documentos lado a lado (nota, orçamento, recibo) ---------- */
+.notas{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:34px;margin-bottom:30px}
+.nota{background:#fff;border:1.5px solid rgba(var(--texto-rgb),.35);border-radius:var(--raio);padding:24px 24px 22px;color:var(--texto);position:relative}
+.nota.foco{border:2px solid var(--destaque)}
+.nota .cabn{font-size:12px;font-weight:800;letter-spacing:.24em;text-transform:uppercase;color:var(--titulo);border-bottom:1px dashed rgba(var(--texto-rgb),.4);padding-bottom:12px;margin-bottom:10px}
+.nota .lin{display:flex;justify-content:space-between;gap:12px;font-size:18px;line-height:1.3;padding:10px 0;border-bottom:1px solid rgba(var(--texto-rgb),.14)}
+.nota .lin span:last-child{font-weight:600;text-align:right}
+.nota .lin.off span:last-child{opacity:.5;font-style:italic;font-weight:400}
+.nota .lin.on{color:var(--destaque-txt)}
+.nota .lin.on span{font-weight:800}
+.nota .veredito{margin-top:20px;font-size:30px;font-weight:var(--peso-titulo);line-height:1.12;color:var(--titulo);letter-spacing:-.01em}
+.nota.foco .veredito b{color:var(--destaque-txt)}
+.escuro .notas + .corpo, .escuro .notas ~ p{color:rgba(255,255,255,.85)}
+
+/* card único: régua no topo, da cor escura à de destaque */
+.barra{position:absolute;left:0;right:0;top:0;height:10px;z-index:6;background:linear-gradient(90deg,var(--escuro) 0%,var(--destaque) 100%)}
+
+/* card de notícia (`estilo: noticia`): tag à esquerda, edição à direita, sem logo e sem rodapé */
+.cab-noticia{align-items:flex-start}
+.cab-noticia .tag{font-size:17px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:#fff;border-left:4px solid var(--destaque);padding-left:14px;line-height:1.1}
+.cab-noticia .ed{font-size:17px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:#fff;line-height:1.1}
+.slide.foto.noticia .bg::after{background:linear-gradient(180deg,rgba(var(--escuro-rgb),.06) 0%,rgba(var(--escuro-rgb),.08) 40%,rgba(var(--escuro-rgb),.30) 54%,rgba(var(--escuro-rgb),.72) 67%,rgba(var(--escuro-rgb),.92) 80%,var(--escuro) 100%)}
+.slide.foto.noticia main{bottom:120px}
+.slide.foto.noticia main::after{content:'';display:block;height:1px;background:rgba(255,255,255,.28);margin-top:110px}
+.slide.foto.noticia .selo-capa{font-size:13px;padding:9px 14px 8px;margin-bottom:22px}
+.slide.foto.noticia .sub{margin-top:22px;font-size:26px}
+
+/* ---------- reação a fala pública: capa de reação, quadro de vídeo, print de manchete, extrato ---------- */
+.selo-capa-ponto{display:inline-flex;align-items:center;gap:12px;align-self:flex-start;background:var(--destaque);color:var(--sobre-destaque);font-size:14px;font-weight:800;letter-spacing:.26em;text-transform:uppercase;padding:12px 20px 11px;margin-bottom:30px;border-radius:var(--raio)}
+.selo-capa-ponto::before{content:'';width:10px;height:10px;border-radius:50%;background:currentColor;box-shadow:0 0 0 4px rgba(255,255,255,.25)}
+.slide.foto.reacao .bg{filter:saturate(.9) contrast(1.04)}
+.slide.foto.reacao .bg::after{background:linear-gradient(180deg,rgba(var(--escuro-rgb),.10) 0%,rgba(var(--escuro-rgb),.14) 28%,rgba(var(--escuro-rgb),.42) 46%,rgba(var(--escuro-rgb),.78) 62%,rgba(var(--escuro-rgb),.95) 78%,var(--escuro) 100%)}
+.slide.foto.reacao main{bottom:196px}
+.slide.foto.reacao h1{font-size:80px;letter-spacing:-.025em}
+.slide.foto.reacao h1 b{font-weight:800}
+.slide.foto.reacao .pergunta{margin-top:34px;padding-top:24px;border-top:4px solid var(--destaque);max-width:820px;font-size:38px;font-weight:700;line-height:1.18;color:#fff;letter-spacing:-.01em}
+.slide.foto.reacao .legenda-foto{margin-bottom:22px;font-size:12.5px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:rgba(255,255,255,.72)}
+.slide.foto.reacao .pe .seta{background:#fff;color:var(--escuro);border-color:#fff;font-weight:800;padding:16px 28px;border-radius:40px;font-size:14px}
+
+/* quadro de vídeo como player */
+.player{position:relative;width:888px;height:500px;border-radius:8px;overflow:hidden;background:#000;border:1.5px solid var(--fio-esc);box-shadow:0 26px 60px rgba(0,0,0,.45)}
+.claro .player{border-color:var(--fio)}
+.player img{width:100%;height:100%;object-fit:cover;display:block}
+.player [class^=chip]{position:absolute;bottom:22px;font-size:13px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:#fff;padding:10px 14px;border-radius:var(--raio);line-height:1}
+.player .chip-t{left:20px;background:rgba(var(--escuro-rgb),.88)}
+.player .chip-t::before{content:'▶';margin-right:10px;font-size:11px;color:var(--destaque)}
+.player .chip-f{right:20px;background:var(--destaque);color:var(--sobre-destaque)}
+.player .barra-play{position:absolute;left:0;right:0;bottom:0;height:6px;background:rgba(255,255,255,.28)}
+.player .barra-play i{display:block;height:100%;background:var(--destaque)}
+.aspas{position:relative;font-size:44px;font-weight:var(--peso-titulo);line-height:1.18;letter-spacing:-.015em;color:var(--titulo);margin-top:44px;padding-left:64px;max-width:888px}
+.aspas b{font-weight:700}
+.escuro .aspas{color:#fff}
+.aspas::before{content:'\201C';position:absolute;left:0;top:-18px;font-size:130px;line-height:1;font-weight:700;color:var(--destaque)}
+.coment{display:flex;gap:20px;align-items:flex-start;margin-top:36px;font-size:31px;font-weight:400;line-height:1.32;color:var(--texto);max-width:888px}
+.coment b{font-weight:700;color:var(--titulo)}
+.escuro .coment{color:rgba(255,255,255,.85)} .escuro .coment b{color:#fff}
+.coment::before{content:'';flex:none;width:6px;align-self:stretch;background:var(--destaque);border-radius:2px}
+
+/* print de manchete em cartão (captura em tela de celular) */
+.prints{display:flex;gap:26px;justify-content:center;margin-top:8px}
+.print{position:relative;background:#fff;border-radius:22px;overflow:hidden;border:1.5px solid rgba(0,0,0,.14);box-shadow:0 30px 70px rgba(0,0,0,.35)}
+.escuro .print{box-shadow:0 34px 80px rgba(0,0,0,.6);border-color:rgba(255,255,255,.18)}
+.print img{display:block;width:100%;height:auto}
+.print .fonte-print{position:absolute;left:0;right:0;bottom:0;padding:26px 18px 14px;background:linear-gradient(0deg,rgba(var(--escuro-rgb),.97) 0%,rgba(var(--escuro-rgb),.9) 50%,rgba(var(--escuro-rgb),0) 100%);color:#fff;font-size:12px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;text-align:center}
+.prints + .coment{margin-top:34px}
+
+/* extrato: a conta linha por linha */
+.extrato{background:#fff;border:1.5px solid rgba(var(--texto-rgb),.32);border-top:5px solid var(--destaque);border-radius:var(--raio);padding:28px 36px 30px;color:var(--texto);margin-top:10px;max-width:888px}
+.escuro .extrato{border-color:rgba(255,255,255,.2);border-top-color:var(--destaque)}
+.extrato .cabn{display:flex;justify-content:space-between;font-size:13px;font-weight:800;letter-spacing:.24em;text-transform:uppercase;color:var(--titulo);border-bottom:1px dashed rgba(var(--texto-rgb),.45);padding-bottom:14px;margin-bottom:6px}
+.extrato .lin{display:flex;justify-content:space-between;align-items:center;gap:20px;font-size:26px;line-height:1.25;padding:15px 0;border-bottom:1px solid rgba(var(--texto-rgb),.14)}
+.extrato .lin span:first-child{font-weight:400}
+.extrato .lin span:last-child{font-weight:700;text-align:right;white-space:nowrap;color:var(--titulo);font-size:28px}
+.extrato .lin.on span:last-child{color:var(--destaque-txt)}
+.extrato .lin.off span:last-child{opacity:.6;font-style:italic;font-weight:400;font-size:24px}
+.extrato .lin small{display:block;font-size:16px;line-height:1.3;opacity:.72;margin-top:3px}
+.extrato .veredito{display:flex;justify-content:space-between;align-items:baseline;gap:24px;margin-top:22px;padding-top:20px;border-top:2.5px solid var(--escuro);font-size:38px;font-weight:var(--peso-titulo);line-height:1.1;color:var(--titulo);letter-spacing:-.01em}
+.extrato .veredito b{font-weight:700}
+.extrato .veredito .k{flex:none;font-size:13px;font-weight:800;letter-spacing:.24em;text-transform:uppercase;color:var(--destaque-txt)}
+.extrato + .fonte{margin-top:16px}
+
+/* ---------- traço à mão: marcas de caneta, cena, roda do ano, dois lados, mosaico ---------- */
+.marcas{position:absolute;inset:0;width:100%;height:100%;z-index:2;pointer-events:none}
+.marcas path{fill:none;stroke:var(--destaque);stroke-width:6;stroke-linecap:round;stroke-linejoin:round}
+.metade .marcas path{stroke-width:8}
+
+/* cena: imagem sangrando, texto no topo e na base */
+.slide.cena .bg::after{background:linear-gradient(180deg,rgba(var(--escuro-rgb),.94) 0%,rgba(var(--escuro-rgb),.70) 17%,rgba(var(--escuro-rgb),.12) 33%,rgba(var(--escuro-rgb),0) 50%,rgba(var(--escuro-rgb),.18) 62%,rgba(var(--escuro-rgb),.80) 76%,rgba(var(--escuro-rgb),.96) 100%)}
+.slide.cena.ceu .bg::after{background:linear-gradient(180deg,rgba(var(--escuro-rgb),0) 0%,rgba(var(--escuro-rgb),0) 58%,rgba(var(--escuro-rgb),.30) 68%,rgba(var(--escuro-rgb),.86) 80%,var(--escuro) 100%)}
+.slide.cena.sombra-topo .bg::after{background:linear-gradient(180deg,rgba(var(--escuro-rgb),.96) 0%,rgba(var(--escuro-rgb),.90) 34%,rgba(var(--escuro-rgb),.62) 50%,rgba(var(--escuro-rgb),.10) 64%,rgba(var(--escuro-rgb),0) 72%,rgba(var(--escuro-rgb),.35) 88%,rgba(var(--escuro-rgb),.75) 100%)}
+.cena-txt{position:absolute;left:var(--pad);right:var(--pad);z-index:3;color:#fff}
+.cena-txt.topo{top:180px}
+.cena-txt.base{bottom:175px}
+.cena-txt .t{font-size:48px;font-weight:var(--peso-titulo);line-height:1.14;letter-spacing:-.018em;max-width:860px}
+.cena-txt .t b{font-weight:800}
+.cena-txt p.corpo{color:rgba(255,255,255,.85);margin:18px 0 0}
+.cena-txt .fonte{margin-top:14px;color:rgba(255,255,255,.6)}
+.cena-txt.txt-escuro{color:var(--titulo)}
+
+/* roda do ano */
+.h2-ano{font-size:48px;margin-bottom:18px}
+.ano{position:relative;width:888px;margin:0 auto}
+.ano svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.ano .anel path,.ano .anel line{fill:none;stroke:var(--destaque);stroke-width:6;stroke-linecap:round}
+.ano .anel-eco path{fill:none;stroke:rgba(var(--escuro-rgb),.28);stroke-width:2;stroke-linecap:round}
+.escuro .ano .anel-eco path{stroke:rgba(255,255,255,.26)}
+.ano .mes circle{fill:var(--claro);stroke:rgba(var(--escuro-rgb),.45);stroke-width:2}
+.escuro .ano .mes circle{fill:var(--escuro);stroke:rgba(255,255,255,.5)}
+.ano .mes text{font-family:var(--fonte);font-size:15px;font-weight:800;letter-spacing:.08em;fill:var(--titulo)}
+.escuro .ano .mes text{fill:rgba(255,255,255,.88)}
+.ano .mes.on circle{fill:var(--escuro);stroke:var(--escuro)}
+.ano .mes.on text{fill:#fff}
+.escuro .ano .mes.on circle{fill:#fff;stroke:#fff}
+.escuro .ano .mes.on text{fill:var(--escuro)}
+.ano .rot-mes{font-family:var(--fonte);font-size:24px;font-weight:800;fill:var(--titulo)}
+.escuro .ano .rot-mes{fill:#fff}
+.centro-ano{position:absolute;transform:translate(-50%,-50%);width:236px;height:236px;border-radius:50%;background:var(--escuro);color:#fff;
+  display:flex;align-items:center;justify-content:center;text-align:center;font-size:27px;font-weight:700;line-height:1.15;padding:24px}
+.escuro .centro-ano{background:#fff;color:var(--escuro)}
+.ano + p.corpo{margin-top:28px}
+
+/* dois lados: a mesma situação vista de dois jeitos */
+.lados{display:flex;flex-direction:column;gap:26px;max-width:888px;margin-bottom:26px}
+.lados-cab{display:grid;grid-template-columns:1fr 1fr;gap:16px;font-size:27px;font-weight:800;line-height:1}
+.lados-cab span{display:flex;align-items:center;gap:12px}
+.lados-cab .ca{color:rgba(var(--texto-rgb),.62)} .lados-cab .cb{color:var(--destaque-txt)}
+.escuro .lados-cab .ca{color:rgba(255,255,255,.55)} .escuro .lados-cab .cb{color:#fff}
+.lados .ico{width:40px;height:28px;flex:none;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round}
+.lados-lin{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.lados-lin .k{grid-column:1 / -1;font-size:25px;font-weight:800;color:var(--titulo);margin-bottom:-4px}
+.escuro .lados-lin .k{color:#fff}
+.lados-lin .a,.lados-lin .b{font-size:28px;line-height:1.3;padding:22px 24px;border-radius:var(--raio)}
+.lados-lin .a{background:rgba(var(--texto-rgb),.07);color:rgba(var(--texto-rgb),.78)}
+.lados-lin .b{background:#fff;color:var(--titulo);font-weight:600;border-left:5px solid var(--destaque);box-shadow:0 1px 0 rgba(var(--escuro-rgb),.08)}
+.escuro .lados-lin .a{background:rgba(255,255,255,.06);color:rgba(255,255,255,.62)}
+.escuro .lados-lin .b{background:#fff;color:var(--titulo)}
+.lados-lin b{font-weight:800}
+
+/* mosaico: grade de fotos sangrando no topo */
+.mosaico .grade{position:absolute;left:0;right:0;top:0;display:grid;gap:8px}
+.mosaico .grade::before{content:'';position:absolute;left:0;right:0;top:0;height:230px;z-index:2;pointer-events:none;
+  background:linear-gradient(180deg,rgba(var(--escuro-rgb),.66) 0%,rgba(var(--escuro-rgb),.26) 55%,rgba(var(--escuro-rgb),0) 100%)}
+.mosaico .tile{background-size:cover;background-position:center;background-color:var(--escuro)}
+.grade.n3{grid-template-columns:2fr 1fr;grid-template-rows:1fr 1fr} .grade.n3 .tile:first-child{grid-row:span 2}
+.grade.n4{grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr}
+.grade.n5{grid-template-columns:repeat(6,1fr);grid-template-rows:1fr 1fr}
+.grade.n5 .tile:nth-child(-n+2){grid-column:span 3} .grade.n5 .tile:nth-child(n+3){grid-column:span 2}
+.mosaico .texto-half{position:absolute;left:var(--pad);right:var(--pad);bottom:170px;display:flex;flex-direction:column;justify-content:center}
+
+/* crédito da imagem: na capa, à esquerda do botão; na metade, no pé da foto */
+.credito-foto{position:absolute;left:var(--pad);bottom:86px;z-index:6;max-width:560px;font-size:13px;font-weight:600;letter-spacing:.03em;line-height:1.3;color:rgba(255,255,255,.66)}
+.credito-half{position:absolute;right:28px;bottom:16px;z-index:2;font-size:12px;font-weight:600;letter-spacing:.03em;color:rgba(255,255,255,.78);text-shadow:0 1px 3px rgba(0,0,0,.5)}
+
+/* ---------- proposta: item numerado, print da fonte, "na prática" ---------- */
+.proposta .bg-prop{position:absolute;inset:0;background-size:cover;background-position:center;background-repeat:no-repeat;background-color:var(--escuro)}
+/* a cor escura pesa do lado do texto e abre do lado da foto */
+.proposta .bg-prop::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(var(--escuro-rgb),.97) 0%,rgba(var(--escuro-rgb),.92) 40%,rgba(var(--escuro-rgb),.62) 70%,rgba(var(--escuro-rgb),.30) 100%),
+  linear-gradient(180deg,rgba(var(--escuro-rgb),0) 60%,rgba(var(--escuro-rgb),.75) 100%)}
+.proposta main{justify-content:center}
+.tit-prop{display:flex;gap:24px;align-items:flex-start;margin-bottom:28px}
+.selo-n{flex:none;width:66px;height:66px;margin-top:2px;background:var(--destaque);color:var(--sobre-destaque);font-size:40px;font-weight:800;display:flex;align-items:center;justify-content:center;border-radius:var(--raio)}
+.proposta h2{font-size:48px;line-height:1.12;margin:0}
+.proposta p.corpo{font-size:27px;line-height:1.42;margin-bottom:0}
+.print-card{margin:34px 0 34px;background:#fff;border-radius:6px;overflow:hidden;box-shadow:0 24px 60px rgba(var(--escuro-rgb),.30),0 6px 16px rgba(0,0,0,.14)}
+.escuro .print-card{box-shadow:0 26px 70px rgba(0,0,0,.55),0 6px 16px rgba(0,0,0,.35)}
+.print-card img{display:block;width:100%}
+.pratica{border-left:5px solid var(--destaque);padding:4px 0 4px 26px}
+.pratica p{font-size:27px;line-height:1.42;color:var(--titulo)}
+.pratica p b{font-weight:800}
+.escuro .pratica p{color:#fff}
+
+/* ---------- recorte: figura sem fundo, pode atravessar a divisa entre dois slides ---------- */
+.recorte{position:absolute;z-index:4;width:auto;pointer-events:none;filter:drop-shadow(0 20px 40px rgba(0,0,0,.25))}
+.com-recorte-dir main{right:440px}
+.com-recorte-esq main{left:400px}
+.com-recorte-dir .pe .seta{display:none}
+/* em fundo escuro: contorno de luz sutil + halo, pra roupa escura não sumir no fundo */
+.brilho-rec{position:absolute;width:940px;height:940px;border-radius:50%;z-index:2;pointer-events:none;
+  background:radial-gradient(circle,rgba(255,255,255,.22) 0%,rgba(255,255,255,.08) 38%,rgba(255,255,255,0) 68%)}
+.escuro .recorte{filter:drop-shadow(0 0 1.5px rgba(255,255,255,.55)) drop-shadow(0 24px 44px rgba(0,0,0,.35))}
+
+/* ---------- paginas: páginas reais de um documento em leque, com selo numerado ---------- */
+.paginas-slide h2{margin-bottom:26px}
+.leque{position:relative;height:530px;margin:6px 0 64px;transform:perspective(1700px) rotateX(14deg);transform-origin:50% 60%}
+.leque .pag{position:absolute;top:20px;width:344px;height:474px;background:#fff;border-radius:4px;transform-origin:50% 100%;
+  box-shadow:0 34px 70px rgba(0,0,0,.50),0 8px 18px rgba(0,0,0,.30)}
+.claro .leque .pag{box-shadow:0 30px 60px rgba(var(--escuro-rgb),.30),0 6px 16px rgba(var(--escuro-rgb),.18)}
+.leque .pag img{display:block;width:100%;height:100%;object-fit:cover;object-position:top;border-radius:4px}
+.leque .p1{left:-6px;transform:rotate(-8deg) translateY(26px);z-index:1}
+.leque .p2{left:272px;transform:translateY(-10px);z-index:2}
+.leque .p3{left:544px;transform:rotate(8deg) translateY(26px);z-index:3}
+.pag-tag{position:absolute;left:-16px;top:-20px;display:flex;align-items:center;gap:12px;padding-right:16px;background:#fff;border-radius:var(--raio);
+  font-size:19px;font-weight:800;letter-spacing:.04em;color:var(--titulo);box-shadow:0 6px 16px rgba(0,0,0,.25)}
+.pag-tag .n{width:50px;height:50px;background:var(--destaque);color:var(--sobre-destaque);font-size:28px;display:flex;align-items:center;justify-content:center;border-radius:var(--raio)}
+
+/* ---------- infográfico em cartão: linha (trajetória) e barras (escalada) ---------- */
+.graf-card{margin:30px 0 32px;background:#fff;border-radius:6px;padding:26px 30px 20px;box-shadow:0 24px 60px rgba(var(--escuro-rgb),.30),0 6px 16px rgba(0,0,0,.14)}
+.escuro .graf-card{box-shadow:0 26px 70px rgba(0,0,0,.55),0 6px 16px rgba(0,0,0,.35)}
+.graf-card svg{display:block;width:100%;height:auto;overflow:visible}
+.g-tit{font-size:21px;font-weight:800;color:var(--titulo);margin-bottom:4px}
+.g-base{stroke:rgba(var(--escuro-rgb),.18);stroke-width:2}
+.g-linha{fill:none;stroke:var(--escuro);stroke-width:5;stroke-linejoin:round;stroke-linecap:round}
+.g-pt{fill:#fff;stroke:var(--escuro);stroke-width:4}
+.g-pt.on{fill:var(--destaque);stroke:var(--destaque)}
+.g-barra{fill:rgba(var(--escuro-rgb),.82)}
+.g-barra.on{fill:var(--destaque)}
+.g-val{font-family:var(--fonte);font-size:30px;font-weight:800;fill:var(--titulo)}
+.g-val.on{fill:var(--destaque-txt)}
+.g-k{font-family:var(--fonte);font-size:21px;font-weight:600;fill:rgba(var(--texto-rgb),.8)}
+.g-nota{font-size:20px;line-height:1.35;color:var(--titulo);margin-top:6px}
+.g-nota b{font-weight:800;color:var(--destaque-txt)}
+.g-fonte{font-size:15px;color:rgba(var(--texto-rgb),.65);margin-top:8px;letter-spacing:.02em}
+
+/* ---------- ciclo: framework 360, anel geométrico com seta de giro, nós iguais, selo embaixo ---------- */
+.ciclo .ciclo-anel{fill:none;stroke:var(--destaque);stroke-width:4}
+.ciclo .ciclo-seta{fill:var(--destaque)}
+.ciclo .ciclo-no circle{fill:#fff;stroke:var(--escuro);stroke-width:3}
+.ciclo .ciclo-no text{font-family:var(--fonte);font-size:22px;font-weight:800;fill:var(--titulo)}
+.escuro .ciclo .ciclo-no circle{fill:var(--escuro);stroke:#fff}
+.escuro .ciclo .ciclo-no text{fill:#fff}
+.ciclo .ciclo-selo circle{fill:var(--destaque)}
+.ciclo .ciclo-selo text{font-family:var(--fonte);font-size:26px;font-weight:900;fill:var(--sobre-destaque)}
+.ciclo .centro-ano{width:200px;height:200px;font-size:24px;flex-direction:column;line-height:1.15}
+.ciclo .centro-ano b{display:block;font-size:76px;font-weight:900;line-height:.95}
+.ciclo .centro-ano small{display:block;font-size:17px;font-weight:700;letter-spacing:.02em;margin-top:6px;opacity:.9}
+
+/* fontes no rodapé: letra pequena, à esquerda do botão "arraste" */
+.fonte-rodape{position:absolute;left:var(--pad);bottom:66px;width:680px;z-index:6;font-size:13px;line-height:1.4;letter-spacing:.01em;color:rgba(var(--texto-rgb),.72)}
+.escuro .fonte-rodape{color:rgba(255,255,255,.62)}

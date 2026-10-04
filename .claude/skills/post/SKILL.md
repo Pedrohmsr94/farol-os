@@ -70,7 +70,7 @@ Se o operador quiser seguir direto, seguir. Não travar.
 
 **A abertura.** Primeira linha carrega o post inteiro. Ela fala do problema de
 quem lê, não da empresa. "Sua declaração pode estar na malha fina sem você
-saber" ganha de "A Unitec é uma contabilidade com 15 anos de mercado".
+saber" ganha de "Somos uma contabilidade com 15 anos de mercado".
 
 **O corpo.** Uma ideia por bloco. Concreto — número, nome, situação real.
 Se for carrossel, um bloco por card, numerado, cada card se sustentando sozinho.

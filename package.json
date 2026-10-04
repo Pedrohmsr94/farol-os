@@ -2,10 +2,12 @@
   "name": "farol-os",
   "version": "1.0.0",
   "private": true,
-  "description": "Farol OS — scripts de renderizacao de material visual",
+  "description": "Farol OS — scripts de renderizacao de material visual e coleta de dado publico",
   "scripts": {
     "carrossel": "node scripts/render-carrossel.js",
-    "setup": "npm install && npx playwright install chromium"
+    "instagram": "node scripts/coletores/instagram.js",
+    "setup": "npm install && npx playwright install chromium",
+    "setup:python": "py -m pip install -r requirements.txt"
   },
   "devDependencies": {
     "playwright": "^1.49.0"

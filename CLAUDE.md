@@ -109,17 +109,20 @@ nome do arquivo. Quando a frase pedir outro texto, alias:
 ## Onde cada coisa mora
 
 - `_memoria/` — o que o Claude lê toda sessão. Prosa curta e curada
-- `_memoria/fontes/` — dump bruto: transcrição de reunião, briefing, print. Não digerido
-- `marca/` — voz, público, território de palavras, referência visual, logo
+- `_memoria/fontes/` — dump bruto: transcrição de reunião (o `/transcrever` escreve aqui), briefing, print. Não digerido
+- `marca/` — voz, público, território de palavras
+- `identidade/` — o visual: cores, fontes e logo num arquivo só, e o vocabulário de layouts do carrossel. O gerador lê daqui
 - `diagnostico/` — o retrato de onde o marketing estava quando começou
 - `pesquisa/` — a camada que faz o conteúdo não ser opinião solta
   - `pesquisa/fontes.md` — o mapa de fontes do nicho desse cliente
   - `pesquisa/radar/` — briefings de pauta, do que mudou lá fora
   - `pesquisa/ideias/` — o banco perene, do que já existe no negócio
   - `pesquisa/angulos/` — os ângulos de cada tema
-  - `pesquisa/investigacoes/` — voz real do dono, análise de nicho, comentários
+  - `pesquisa/investigacoes/` — voz real do dono, análise de nicho, comentários, reels (`reels/`) e o placar da própria conta (`desempenho/`)
+  - `pesquisa/coleta/raw/` — JSON cru dos coletores. Origem de todo número de referência
+  - `pesquisa/referencias/` — perfis e posts de referência lidos. A mídia baixada fica fora do git
   - `pesquisa/seo/` — os 7 passos de SEO e GEO
-- `conteudo/linhas-editoriais.md` — o que cada grupo de conteúdo tem que conquistar
+- `conteudo/arquitetura-editorial.md` — o que a marca defende, as tensões do público, as linhas com a fatia de cada uma, o balanço de funil e o que ela nunca faz. Toda skill de conteúdo lê
 - `conteudo/calendario.md` — a pauta do mês
 - `conteudo/fila/` — o que está escrito esperando aprovação
 - `conteudo/publicados/` — o que foi ao ar, com data e resultado
@@ -138,6 +141,8 @@ Nenhuma peça pula uma etapa. É isso que separa conteúdo que constrói autorid
 conteúdo que só ocupa o feed.
 
 ```
+/arquitetura-editorial   a lente: o que a marca defende, tensões, linhas, funil
+   ↓
 /radar          o que mudou lá fora → pautas com fato e fonte    ⟍
 /ideias         o que já existe no negócio → banco perene         ⟩ pesquisa
    ↓                                                            ⟋
@@ -163,7 +168,9 @@ pesquisa é reprovada pelo `/revisar` (bloqueio 9). Não é rigor decorativo: é
 impede o cliente de virar mais um perfil publicando o que todo mundo já publicou.
 
 Alimentando a esteira por fora: `/investigar` (voz real, nicho, comentários do
-público) e `/seo` (demanda, concorrência, GMB, GEO).
+público, reel que estourou), `/transcrever` (reunião e áudio viram texto) e `/seo`
+(demanda, concorrência, GMB, GEO). O `/revisar` julga também contra o placar real
+da conta, em `pesquisa/investigacoes/desempenho/perfil-de-desempenho.md`.
 
 ---
 
@@ -176,13 +183,14 @@ Antes de executar qualquer tarefa, verificar se existe skill em
 
 | Quando | O que roda |
 |---|---|
-| Começo do contrato | `/instalar` → `/diagnostico` → `/marca` → `/seo` |
+| Começo do contrato | `/instalar` → `/diagnostico` → `/marca` → `/seo` → `/arquitetura-editorial`. Preencher `identidade/` com o brandbook |
+| Teve reunião gravada | `/transcrever` |
 | Rodada de pesquisa | `/radar` — diário ou semanal, conforme o ritmo do setor |
 | Começo de mês | `/ideias` → `/calendario` |
 | Todo dia de trabalho | `/abrir` → trabalha → `/fechar` → `/salvar` |
 | Produção | `/angulos` → `/post` · `/carrossel` · `/publicar-tema` → `/revisar` → `/aprovar-post` |
 | Toda semana | `/semana` |
-| Todo mês | `/relatorio` |
+| Todo mês | `/relatorio` e o placar da conta (`py scripts/perfil-de-desempenho.py`) |
 | Teve uma ideia de comando | `/nova-skill` |
 | Percebeu que repete algo | `/mapear-rotinas` |
 
@@ -231,7 +239,7 @@ pergunta simples, ou mudança que o bloco acima já salvou.
 
 ## Criação de skills
 
-O sistema é extensível de propósito. As 24 skills cobrem o que é comum a
+O sistema é extensível de propósito. As 27 skills cobrem o que é comum a
 qualquer operação de marketing; o que é do jeito de trabalhar do operador, ele
 constrói.
 

@@ -39,3 +39,29 @@ pesquisa/radar/_log/
 
 # Chaves de API - nunca sobem
 .env
+
+# Midia de terceiro coletada - pesada, expira, sem direito de republicar
+pesquisa/referencias/midia/
+pesquisa/referencias/perfis/*/top*.jpg
+pesquisa/investigacoes/reels/*/video.*
+
+# Download interrompido do yt-dlp
+*.part
+*.ytdl
+
+# Audio bruto de reuniao - a transcricao sobe, o audio nao
+*.m4a
+*.mp3
+*.wav
+*.ogg
+*.opus
+
+# Cache do Python
+__pycache__/
+
+# Saida do teste do carrossel de exemplo - regenera a cada render
+conteudo/exemplos/*/carrossel.html
+conteudo/exemplos/*/modelo.css
+conteudo/exemplos/*/instagram/
+conteudo/exemplos/*/*.png
+!conteudo/exemplos/*/_previa.png

@@ -27,10 +27,12 @@ Curto. Carrega contexto e devolve o estado do cliente em poucas linhas.
 
    E parar.
 
-3. Conferir quatro coisas e mencionar só quando forem verdade:
+3. Conferir cinco coisas e mencionar só quando forem verdade:
    - `marca/guia-de-marca.md` em branco → avisar que conteúdo vai sair genérico
    - `diagnostico/diagnostico.md` não existe → avisar que não tem baseline
    - `pesquisa/fontes.md` não existe → avisar que o `/radar` ainda não foi montado
+   - `conteudo/arquitetura-editorial.md` em branco → avisar que as pautas saem
+     sem lente (rodar `/arquitetura-editorial`)
    - itens em "Em aberto" no `indice.md` parados há mais de 15 dias
 
 4. Responder no formato:

@@ -1,0 +1,9 @@
+# Dependencias Python dos scripts do Farol OS.
+# Instalar uma vez por maquina:  py -m pip install -r requirements.txt
+# Nada aqui e obrigatorio pra usar as skills — so pros scripts que cada linha cita.
+# Fora do pip: ffmpeg (winget install Gyan.FFmpeg) pros quadros de video e audio de video.
+
+pyyaml          # scripts/carrossel/gerar.py — le o roteiro do carrossel
+pillow          # scripts/coletores/resumir-perfil.py — folha de contato top-12
+yt-dlp          # scripts/coletar-comentarios.py e scripts/reel-referencia.py
+faster-whisper  # scripts/reel-referencia.py e scripts/transcrever.py — transcricao local, offline
